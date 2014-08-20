@@ -160,11 +160,22 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 	
 	/** Returns true if the chord contains six notes, false otherwise */
 	public boolean isHexad() { return size() == 6; } 
+		
 	
 	/**
 	 * Attempt to guess a name of the chord, given the sequence and the tonic.  Standard abbreviations include aug, dim, 7, 
 	 * M7 (major 7th), m (minor), m7 (minor 7th), and + (augmented 5th).  In the worse case, it will return a list of the tones
 	 * with their tonic if the algorithm can't tell what this chord is supposed to be.   (E.g. C, C#, D)
+	 * 
+	 * <p>Information on procedures for naming chords:  http://www.standingstones.com/chordname.html
+	 * Root of the chord
+	 * If the third degree is minor, put m, otherwise nothing
+	 * If the seventh degree is minor, put 7, else if it is major put maj 7 or a 7 with a circle around it. 
+	 * If the fifth degree is perfect, put nothing. If it is diminished, put -5, if it is augmented put +5. Sometimes a chord may have both ±5. Use superscript if available.
+	 * Next, the ninth degree. If it is perfect, put nothing. If it is minor, put -9. Sometimes a chord may have both ±9. (That would require a major third to be present as well.) Use superscript if available.
+	 * Next, the eleventh degree. If it is perfect, put nothing. If it is augmented, put +11. No other possibilities are allowed. Use superscript if available.
+	 * Next, the thirteenth degree. If it is perfect, put nothing. If it is minor, put -13. No other possibilities are allowed. Use superscript if available.
+	 * 
 	 * @return a string name of a chord, for example CM7 for C major 7 (C, E, G, B)
 	 */
 	public String getName() { 
@@ -175,6 +186,21 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		b.append(tonicName);
 		
 		SequenceAnalyzer r = new SequenceAnalyzer(tonic, this);
+		
+		/*
+		if(r.flatThird) b.append("m");
+		
+		if(r.flatSeventh) b.append("7");
+		else if(r.seventh) b.append("maj 7");
+		
+		if(r.flatFifth && r.augmentedFifth) 
+			b.append("-/+5");
+		else if(r.flatFifth)
+			b.append("-5");
+		else if(r.augmentedFifth)
+			b.append("5");
+		*/
+			
 		
 		if(size() == 3) { 
 			if(r.third && r.fifth) return tonicName; 			

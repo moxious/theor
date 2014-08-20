@@ -5,8 +5,15 @@ import org.rcl.theor.note.NSequence;
 import org.rcl.theor.note.Note;
 import org.rcl.theor.note.NoteCollection;
 
+/**
+ * A sequence analyzer takes a collection of notes, and a tonic, and computes whether or not certain
+ * intervals are present.
+ * @author moxious
+ */
 public class SequenceAnalyzer {
+	public boolean flatSecond;
 	public boolean second; 
+	public boolean augmentedSecond;
 	public boolean flatThird; 
 	public boolean third;
 	public boolean tritone; 
@@ -16,12 +23,14 @@ public class SequenceAnalyzer {
 	public boolean augmentedFifth;
 	public boolean sixth; 
 	public boolean flatSeventh;
-	public boolean seventh;		
+	public boolean seventh;	
+	public boolean ninth;
 
 	public SequenceAnalyzer(Note tonic, NoteCollection notes) {
 		NSequence c = new NSequence(notes).sort();
 		
-		second = c.contains(Interval.SECOND.apply(tonic), false); 
+		flatSecond = c.contains(Interval.DIMINISHED_SECOND.apply(tonic), false); 
+		second = c.contains(Interval.SECOND.apply(tonic), false);		
 		flatThird = c.contains(Interval.MINOR_THIRD.apply(tonic), false); 
 		third = c.contains(Interval.THIRD.apply(tonic), false);
 		tritone = c.contains(Interval.TRITONE.apply(tonic), false); 
@@ -31,7 +40,9 @@ public class SequenceAnalyzer {
 		augmentedFifth = c.contains(Interval.AUGMENTED_FIFTH.apply(tonic), false);
 		sixth = c.contains(Interval.SIXTH.apply(tonic), false); 
 		flatSeventh = c.contains(Interval.FLAT_SEVENTH.apply(tonic), false);
-		seventh = c.contains(Interval.SEVENTH.apply(tonic), false);			
+		seventh = c.contains(Interval.SEVENTH.apply(tonic), false);	
+		
+		ninth = second;		
 	}
 
 	public boolean equals(Object o) { 

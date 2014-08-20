@@ -1,7 +1,9 @@
 package org.rcl.theor.note;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.jfugue.Pattern;
@@ -16,10 +18,11 @@ import org.rcl.theor.scale.Scale;
  * occur in any number of octaves.  Octaves are relative to 0, so middle C is the note with tone class C, octave 0.  Finally, 
  * the rendering hint is whether to render a note as flat or not.  Most notes have two names; i.e. C# and Db are the same thing.
  * For that tone class, the rendering hint indicates whether the note should be considered sharp or flat.
+ * 
+ * @see Pitch Classes http://en.wikipedia.org/wiki/Pitch-class
  * @author moxious
- *
  */
-public class Note implements Patternable {
+public class Note implements Patternable, NoteCollection {
 	/** A */
 	public static final int A = 9;
 	/** A sharp */
@@ -100,21 +103,10 @@ public class Note implements Patternable {
 		}		
 	};
 	
-	public static int getDominant(int noteConstant) { 
-		return (noteConstant + 7) % 12;
-	}
-	
-	public static int getSubdominant(int noteConstant) { 
-		return (noteConstant + 5) % 12;
-	}
-	
-	public static int getRelativeMajor(int noteConstant) { 
-		return (noteConstant + 3) % 12;
-	}
-	
-	public static int getRelativeMinor(int noteConstant) { 
-		return (noteConstant + 9) % 12; 
-	}
+	public static int getDominant(int noteConstant) { return (noteConstant + 7) % 12; }	
+	public static int getSubdominant(int noteConstant) { return (noteConstant + 5) % 12; }
+	public static int getRelativeMajor(int noteConstant) { return (noteConstant + 3) % 12; }	
+	public static int getRelativeMinor(int noteConstant) { return (noteConstant + 9) % 12;	}
 	
 	/** Returns true iff the note is not natural.  Be careful, in that since tone classes
 	 * have more than one name, if you ask if Eb is sharp, the answer will be yes (because it's also
@@ -245,5 +237,18 @@ public class Note implements Patternable {
 		Pattern p = new Pattern();
 		p.addElement(new org.jfugue.Note(getMIDI(), sync.next()));
 		return p;
+	}
+
+	public Collection<Note> getNotes() {
+		HashSet<Note> notes = new HashSet<Note>(1);
+		notes.add(this);
+		return notes;
+	}
+
+	public int countNotes() { return 1; } 
+
+	/** Because a note is not really a collection, this always throws UnsupportedOperationException */
+	public boolean add(Note n) {
+		throw new UnsupportedOperationException();
 	}
 } // End Note

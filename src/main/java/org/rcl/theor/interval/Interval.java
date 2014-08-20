@@ -35,7 +35,9 @@ public class Interval {
 	public static final Interval AUGMENTED_SEVENTH = new Interval(12);
 	public static final Interval OCTAVE = new Interval(12);
 	public static final Interval EIGHTH = new Interval(UNISON.intValue() + OCTAVE.intValue());
+	public static final Interval MINOR_NINTH = new Interval(DIMINISHED_SECOND.intValue() + OCTAVE.intValue());
 	public static final Interval NINTH = new Interval(SECOND.intValue() + OCTAVE.intValue());
+	public static final Interval MINOR_TENTH = new Interval(MINOR_THIRD.intValue() + OCTAVE.intValue());
 	public static final Interval TENTH = new Interval(THIRD.intValue() + OCTAVE.intValue());
 	public static final Interval ELEVENTH = new Interval(FOURTH.intValue() + OCTAVE.intValue());
 	public static final Interval TWELFTH = new Interval(FIFTH.intValue() + OCTAVE.intValue());
