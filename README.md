@@ -23,7 +23,7 @@ the following command:
 	
 Without that command, theor will not compile as the jfugue dependency will be missing.
 
-## Simple Usage Examples
+## Basic Usage Examples
 
 The following text notations generally follow the outline provided by JFugue's [MusicStrings](http://jfugue.org/jfugue-chapter2.pdf).
 Numbers generally indicate octaves (middle C is referred to as C4).
@@ -80,8 +80,35 @@ This would result in three separate Chord objects:
 
 By calling the `.getName()` method on the Chord objects, they would be named F, Bb, and C respectively since they are all major triads.
 
-== FAQ
+## Basic MIDI
 
-=== Does Theor support temperments other than equal temperment?
+Theor works with the MIDI system, either by generating the actual bytes needed for a MIDI stream, or via JFugue.  Here's a code example
+on how to create a MIDI pattern of a chord progression, and play it:
+
+```
+// Create a blank MIDI pattern from JFugue.
+Pattern container = new Pattern();
+container.addElement(new Tempo(80));   // 80bpm.
+				
+// Make a simple I, IV, V chord progression, starting at F major.
+List<Chord> chords = ChordProgression.MI_IV_V.apply(new Note(Note.F, 0));
+for(Chord ch : chords) { 
+	System.out.println("Progression:  " + ch + " => " + ch.getName());
+			
+	// Add this chord (played as a quarter note) to the main pattern.
+	container.add(ch.toPattern(new Syncopation(Syncopation.QUARTER_NOTE)));
+}
+		
+// Create a JFugue player, and play the resulting pattern.
+Player player = new Player();
+player.play(container);
+		
+// Save the resulting data as a MIDI file
+player.saveMidi(container, new File("MyChordProgression.mid"));
+```		
+
+## FAQ
+
+### Does Theor support temperments other than equal temperment?
 
 No, not at the moment.  Theor assumes equal temperment, and an A that vibrates at 440Hz. 
