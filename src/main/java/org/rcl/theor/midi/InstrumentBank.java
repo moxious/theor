@@ -1,4 +1,4 @@
-package org.rcl.theor.composer;
+package org.rcl.theor.midi;
 
 import java.util.HashSet;
 import java.util.Set;

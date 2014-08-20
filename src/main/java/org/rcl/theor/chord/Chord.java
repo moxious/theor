@@ -15,12 +15,24 @@ import org.rcl.theor.note.NSequence;
 import org.rcl.theor.note.Note;
 import org.rcl.theor.note.NoteCollection;
 
+/**
+ * A chord is a set of notes.   This set of notes is un-ordered, although the notes may have a natural ordering
+ * (e.g. C4 is lower than E4).   A C major chord might contain the set:  { C4, E4, G4 }.   Chords always have a
+ * tonic.  So the same collection of notes (C, E, G) are different chords depending on what is considered the tonic.
+ * { C, E, G } is a C major chord (C tonic) but it's something different if you consider G the tonic, since the chord
+ * includes a G tonic, a 4th (C) and a 6th (E).
+ * @author moxious
+ */
 public class Chord extends HashSet<Note> implements NoteCollection, Patternable {
 	private static final long serialVersionUID = 3386041763039624476L;
 	protected Note tonic = null;	
 	
 	protected Chord() { ; } 
 	
+	/**
+	 * Create a chord from a collection of notes.
+	 * @param ncol
+	 */
 	public Chord(NoteCollection ncol) { 
 		this(new NSequence(ncol).sort().get(0), ncol); 		
 	}
@@ -39,6 +51,14 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 	public void setTonic(Note tonic) { this.tonic = tonic; } 
 	public Note getTonic() { return tonic; } 
 	
+	/**
+	 * Check to see if one chord equals another.
+	 * @param other the other chord
+	 * @param tonicSensitive if true, the tonics of the chords must be the same.  If false, the tonics may differ.
+	 * @param octaveSensitive if true, the octaves must be the same.   If false, they may differ.   E.g. if octaveSensitive=true,  
+	 * then { C4, E4, G4 } is not the same chord as { C5, E5, G5 }.   If octaveSensitive=false, then those two are the same chord.
+	 * @return
+	 */
 	public boolean equals(Chord other, boolean tonicSensitive, boolean octaveSensitive) { 
 		if(tonicSensitive && (getTonic() != other.getTonic())) return false;		
 		return new NSequence(this).sort().equals(new NSequence(other).sort(), octaveSensitive);		
@@ -71,12 +91,27 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		return idx;
 	}
 	
+	/** Returns true if the chord contains two notes, false otherwise */
 	public boolean isDyad() { return size() == 2; } 
+	
+	/** Returns true if the chord contains three notes, false otherwise */
 	public boolean isTriad() { return size() == 3; } 
+	
+	/** Returns true if the chord contains four notes, false otherwise */
 	public boolean isTetrad() { return size() == 4; } 
+	
+	/** Returns true if the chord contains five notes, false otherwise */
 	public boolean isPentad() { return size() == 5; } 
+	
+	/** Returns true if the chord contains six notes, false otherwise */
 	public boolean isHexad() { return size() == 6; } 
-		
+	
+	/**
+	 * Attempt to guess a name of the chord, given the sequence and the tonic.  Standard abbreviations include aug, dim, 7, 
+	 * M7 (major 7th), m (minor), m7 (minor 7th), and + (augmented 5th).  In the worse case, it will return a list of the tones
+	 * with their tonic if the algorithm can't tell what this chord is supposed to be.   (E.g. C, C#, D)
+	 * @return a string name of a chord, for example CM7 for C major 7 (C, E, G, B)
+	 */
 	public String getName() { 
 		if(tonic == null || !contains(tonic, false)) return "IDFK: " + asSequence() + " tonic=" + tonic; 
 				
@@ -131,6 +166,7 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		*/ 
 	} // End getName
 	
+	/** Return the number of notes */
 	public int countNotes() { return size(); } 
 	
 	/** Check to see if this contains a given note; if octaveSensitive is true, it will require that the note be in a given octave. */
@@ -142,6 +178,9 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		return false;
 	}
 	
+	/**
+	 * Render the chord as a JFugue pattern, given a syncopation.
+	 */
 	public Pattern toPattern(Syncopation sync) { 
 		Pattern pat = new Pattern();
 				
@@ -224,13 +263,14 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 	
 	public static void main(String [] args) throws Exception {
 		Note tonic = new Note(Note.C, 0, true); 
-				
-		/*
+						
 		for(int x=0; x<10; x++) { 
 			Chord c = Chord.random(tonic); 
-			System.out.println("Chord " + c + " is " + c.getName()); 
+			System.out.println("Chord " + c + " is " + c.getName());
+			
 		}
-		*/
+		
+		System.exit(0);
 		
 		Chord c = new Chord(tonic, Interval.MAJOR_SEVENTH_TETRAD);
 		

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.rcl.theor.composer.DataFeed;
-import org.rcl.theor.composer.InstrumentBank;
+import org.rcl.theor.midi.InstrumentBank;
 
 public class InstrumentChooser extends Chooser {
 	public static List<Byte> harmonyInstruments = makeList(new Object[] {
