@@ -179,7 +179,8 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 	 * @return a string name of a chord, for example CM7 for C major 7 (C, E, G, B)
 	 */
 	public String getName() { 
-		if(tonic == null || !contains(tonic, false)) return "IDFK: " + asSequence() + " tonic=" + tonic; 
+		if(tonic == null || !contains(tonic, false)) 
+			return "Atonal Chord " + asSequence() + " tonic=" + tonic; 
 				
 		StringBuffer b = new StringBuffer("");
 		String tonicName = Note.name(tonic.getToneClass());
@@ -200,7 +201,6 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		else if(r.augmentedFifth)
 			b.append("5");
 		*/
-			
 		
 		if(size() == 3) { 
 			if(r.third && r.fifth) return tonicName; 			
@@ -234,17 +234,10 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		else if(r.seventh && !r.flatSeventh) b.append("M7");
 		
 		if(r.fourth) b.append("add4"); 
-		if(r.second) b.append("add9");
+		if(r.ninth || r.second) b.append("add9");
 		if(r.sixth) b.append("add6");
 		
 		return b.toString();
-		/*
-		return "IDFK: " + asSequence() + " tonic=" + tonic + 
-				(" 2="+ r.second + " b3=" + r.flatThird + " 3=" + r.third + 
-				 " 4=" + r.fourth + " b5=" + r.flatFifth + " 5=" + r.fifth + 
-				 " b6=" + r.augmentedFifth + " 6=" + r.sixth + " b7=" + r.flatSeventh + 
-				 " 7=" + r.seventh);
-		*/ 
 	} // End getName
 	
 	/** Return the number of notes */

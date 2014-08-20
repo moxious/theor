@@ -25,6 +25,7 @@ public class SequenceAnalyzer {
 	public boolean flatSeventh;
 	public boolean seventh;	
 	public boolean ninth;
+	public boolean eleventh;
 
 	public SequenceAnalyzer(Note tonic, NoteCollection notes) {
 		NSequence c = new NSequence(notes).sort();
@@ -40,9 +41,9 @@ public class SequenceAnalyzer {
 		augmentedFifth = c.contains(Interval.AUGMENTED_FIFTH.apply(tonic), false);
 		sixth = c.contains(Interval.SIXTH.apply(tonic), false); 
 		flatSeventh = c.contains(Interval.FLAT_SEVENTH.apply(tonic), false);
-		seventh = c.contains(Interval.SEVENTH.apply(tonic), false);	
-		
-		ninth = second;		
+		seventh = c.contains(Interval.SEVENTH.apply(tonic), false);			
+		ninth = c.contains(Interval.NINTH.apply(tonic), false);
+		eleventh = c.contains(Interval.ELEVENTH.apply(tonic), false); 
 	}
 
 	public boolean equals(Object o) { 

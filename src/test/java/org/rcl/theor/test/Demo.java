@@ -24,11 +24,14 @@ public class Demo {
 		System.out.println(a);
 		System.out.println(a.getFrequency());
 		System.out.println(a.isSharp());
-		
-		
+				
 		// Make a C major chord.   This is done by applying a set of intervals (the major triad) to a note.
 		Chord c = new Chord(Note.MIDDLE_C, Interval.MAJOR_TRIAD);
 		Chord cm = new Chord(Note.MIDDLE_C, Interval.MINOR_TRIAD);
+		
+		
+		c.setTonic(Interval.THIRD.apply(c.getTonic()));
+		System.out.println(c + " => " + c.getName() + " inversion " + c.getInversion());
 		
 		// Make a D major scale, starting at octave 0.
 		NSequence ns = Scale.MAJOR.apply(new Note(Note.D, 0));		
@@ -50,7 +53,6 @@ public class Demo {
 		// player.play(container);
 		
 		assertTrue("C major is the same as the major version of itself.", c.equals(c.makeMajor(), true, true));
-		assertTrue("C minor is the same as the minor version of C major.", cm.equals(c.makeMinor(), true, true));
-		
+		assertTrue("C minor is the same as the minor version of C major.", cm.equals(c.makeMinor(), true, true));		
 	}
 }
