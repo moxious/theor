@@ -6,6 +6,12 @@ import java.util.regex.Matcher;
 import org.rcl.theor.TheorException;
 import org.rcl.theor.interval.Interval;
 
+/**
+ * A ChordTemplate is a way of making chords from a template.  Template tokens are text ways of representing chords relative
+ * to a tonic.  So a token would be "I" or "IVM7".   Relative to C, the token I would be C major.  The token IVM7 would be F maj 7.
+ * @author moxious
+ *
+ */
 public class ChordTemplate {
 	protected static final java.util.regex.Pattern romanNumeralPattern = java.util.regex.Pattern.compile("([iIvV]+)");
 	protected String token = null;
@@ -63,7 +69,7 @@ public class ChordTemplate {
 		boolean major = numeral.toUpperCase().equals(numeral);
 		boolean minor = numeral.toLowerCase().equals(numeral);
 		
-		if(!major && !minor) throw new TheorException("Mixed case illegal chord token '" + tok + "'"); 
+		if(!major && !minor) throw new TheorException("Mixed case illegal chord token '" + tok + "': can't be both minor and major"); 
 		
 		if(!diminished && !majSeventh && !minSeventh && !augmented && !major && !minor) 
 			throw new TheorException("Illegal interval token '" + tok + "'"); 					
@@ -83,6 +89,14 @@ public class ChordTemplate {
 		throw new TheorException("Unrecognized interval token '" + tok + "'"); 		
 	}
 	
+	/**
+	 * Parse a string containing a series of chord tokens (separated by spaces or dashes) into a series of chord templates.
+	 * Example input strings are things like "I - IV - V"  (the one four five chord progression).
+	 * @param toks
+	 * @param major
+	 * @return
+	 * @throws TheorException
+	 */
 	public static ChordTemplate[] parse(String toks, boolean major) throws TheorException { 
 		String [] pieces = toks.split("[\\s-]+");
 		

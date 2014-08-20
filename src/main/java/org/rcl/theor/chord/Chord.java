@@ -48,8 +48,63 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		for(Interval i : ivs) add(i.apply(tonic)); 
 	}
 	
+	/**
+	 * Return true if the chord contains a note that is the specified interval from the tonic, false otherwise.
+	 * So for example, if you wanted to know if a chord contained an augumented 5th, you'd pass this method that
+	 * interval.
+	 */
+	public boolean containsInterval(Interval i) {
+		assert(i != null); 
+		return contains(i.apply(tonic), false);
+	}
+	
+	/** 
+	 * Return true if the chord contains a note that is a major third from the tonic, false otherwise.
+	 * Note that chord lacking a third are neither major nor minor. 
+	 */
+	public boolean isMajor() { return containsInterval(Interval.THIRD); }
+	
+	/** Return true if the chord contains a note that is a minor third from the tonic, false otherwise.
+	 * Note that chords lacking a third are neither major nor minor.
+	 */
+	public boolean isMinor() { return containsInterval(Interval.MINOR_THIRD); } 
+	
 	public void setTonic(Note tonic) { this.tonic = tonic; } 
 	public Note getTonic() { return tonic; } 
+		
+	/**
+	 * @return a chord that is the major version of this chord.
+	 */
+	public Chord makeMajor() { 
+		NSequence ncol = new NSequence();
+		
+		for(Note n : this) { 
+			// Don't permit a minor third in our result.
+			if(n.getToneClass() == Interval.MINOR_THIRD.apply(tonic).getToneClass()) continue;
+			else ncol.add(n);
+		}
+		
+		// Guarantee the presence of a minor third.
+		ncol.add(Interval.THIRD.apply(tonic));
+		return new Chord(tonic, ncol);		
+	}
+	
+	/**
+	 * @return a new chord that is the minor version of this chord.
+	 */
+	public Chord makeMinor() {
+		NSequence ncol = new NSequence();
+		
+		for(Note n : this) { 
+			// Don't permit a major third in our result.
+			if(n.getToneClass() == Interval.THIRD.apply(tonic).getToneClass()) continue;
+			else ncol.add(n);
+		}
+		
+		// Guarantee the presence of a minor third.
+		ncol.add(Interval.MINOR_THIRD.apply(tonic));
+		return new Chord(tonic, ncol);
+	}
 	
 	/**
 	 * Check to see if one chord equals another.
