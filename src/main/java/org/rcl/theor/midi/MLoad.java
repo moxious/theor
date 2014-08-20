@@ -19,6 +19,10 @@ import org.rcl.theor.note.Note;
 import org.rcl.theor.note.NoteCollection;
 import org.rcl.theor.note.TimedNote;
 
+/**
+ * Utilities for converting MIDI files into a sequence of notes, suitable for analysis with theor.
+ * @author moxious
+ */
 public class MLoad {
 	public static Map<Integer,NoteCollection> midi2NSequence(File midi) throws IOException, InvalidMidiDataException, TheorException {
 		Player p = new Player();
