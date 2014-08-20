@@ -28,6 +28,22 @@ Without that command, theor will not compile as the jfugue dependency will be mi
 The following text notations generally follow the outline provided by JFugue's [MusicStrings](http://jfugue.org/jfugue-chapter2.pdf).
 Numbers generally indicate octaves (middle C is referred to as C4).
 
+Notes are pretty simple.  They contain a "tone class" (for example the note C) and an octave.  Middle C is C4.  Notes know what their 
+respective MIDI numbers are, and also what frequency their sound vibrates at.
+
+```
+// Create a new A note (by default, its octave makes this A 440)
+Note a = new Note(Note.A);
+System.out.println(a);
+System.out.println(a.getFrequency());
+System.out.println(a.isSharp());
+```
+
+This code produces three lines of output:
+* A4
+* 440.0
+* false
+
 ```
 // Make a C major chord.   This is done by applying a set 
 // of intervals (the major triad) to a note.
@@ -36,12 +52,21 @@ Chord c = new Chord(Note.MIDDLE_C, Interval.MAJOR_TRIAD);
    
 Printing this chord yields the string "C4 E4 G4".
 
+Scales are thought of as a collection of intervals.  For example, there's the abstract idea of a major scale, separate from 
+D major.  In the `Scale` class, there are collections of intervals describing many common scales.  To create an actual scale,
+you do this by taking a collection of intervals, and "applying" them to a particular tonic.  
+
 ```
 // Make a D major scale, starting at octave 0.
 NSequence ns = Scale.MAJOR.apply(new Note(Note.D, 0));
 ```
    
 The NSequence object is just a sequence of notes.  In this case, it contains D4 E4 F#4 G4 A4 B4 C#5 D5
+
+Theor also supports chord progressions, using a miniature language that musicians may be familiar with.  You 
+can create your own chord progression using a string such as "IV - V - viidim - I" or you can use the library
+of built-in chord progressions.  Again, these chord progressions are specified in the language of intervals.
+To make a particular chord progression, you have to apply those collections of intervals to a particular tonic.
 
 ```
 // Make a simple I, IV, V chord progression starting with F.
@@ -53,4 +78,10 @@ This would result in three separate Chord objects:
 * Bb4 D5 F5 
 * C5 E5 G5
 
-By calling the `.getName()` method on the Chord objects, they would be named F, Bb, and C respectively since they are all major triads. 
+By calling the `.getName()` method on the Chord objects, they would be named F, Bb, and C respectively since they are all major triads.
+
+== FAQ
+
+=== Does Theor support temperments other than equal temperment?
+
+No, not at the moment.  Theor assumes equal temperment, and an A that vibrates at 440Hz. 
