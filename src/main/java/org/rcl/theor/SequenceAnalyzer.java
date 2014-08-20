@@ -1,6 +1,9 @@
 package org.rcl.theor;
 
 import org.rcl.theor.interval.Interval;
+import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
+import org.rcl.theor.note.NoteCollection;
 
 public class SequenceAnalyzer {
 	public boolean second; 

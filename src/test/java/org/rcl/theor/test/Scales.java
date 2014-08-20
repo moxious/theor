@@ -3,8 +3,8 @@ package org.rcl.theor.test;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.rcl.theor.NSequence;
-import org.rcl.theor.Note;
+import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
 import org.rcl.theor.scale.Scale;
 
 public class Scales {

@@ -6,14 +6,14 @@ import java.util.logging.Logger;
 
 import org.jfugue.Instrument;
 import org.jfugue.Pattern;
-import org.rcl.theor.NSequence;
-import org.rcl.theor.Note;
 import org.rcl.theor.TheorException;
-import org.rcl.theor.TimedNote;
 import org.rcl.theor.chord.Chord;
 import org.rcl.theor.composer.ProgressionComposer;
 import org.rcl.theor.composer.HarmonyChanges;
 import org.rcl.theor.interval.Interval;
+import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
+import org.rcl.theor.note.TimedNote;
 import org.rcl.theor.scale.Scale;
 
 public class MelodyMaker {

@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.jfugue.Pattern;
 import org.jfugue.Player;
-import org.rcl.theor.NSequence;
-import org.rcl.theor.Note;
 import org.rcl.theor.Syncopation;
 import org.rcl.theor.TheorException;
+import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
 import org.rcl.theor.scale.Scale;
 
 /**

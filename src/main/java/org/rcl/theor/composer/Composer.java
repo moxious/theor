@@ -5,7 +5,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-import org.rcl.theor.Ditty;
 import org.rcl.theor.TheorException;
 
 public abstract class Composer {

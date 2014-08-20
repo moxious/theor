@@ -3,7 +3,7 @@ package org.rcl.theor.interval;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.rcl.theor.Note;
+import org.rcl.theor.note.Note;
 import org.rcl.theor.scale.Scale;
 
 public class Interval {
@@ -101,7 +101,7 @@ public class Interval {
 		if(c >= 12) { c-=12; o++; }
 		if(c < 0) { c+=12; o--; } 
 		
-		Note r = new Note(c, o, n.renderFlat);
+		Note r = new Note(c, o, n.renderFlat());
 		return r;
 	}
 	

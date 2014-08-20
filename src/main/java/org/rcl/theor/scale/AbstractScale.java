@@ -3,6 +3,12 @@ package org.rcl.theor.scale;
 import org.rcl.theor.interval.Interval;
 import org.rcl.theor.interval.IntervalRing;
 
+/**
+ * Base class for all scales.  What they all have in common is a name, an an interval ring.
+ * 
+ * @author moxious
+ *
+ */
 public abstract class AbstractScale {
 	public String name = null;
 	public IntervalRing intervals;

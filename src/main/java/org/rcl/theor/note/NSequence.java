@@ -1,4 +1,4 @@
-package org.rcl.theor;
+package org.rcl.theor.note;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.jfugue.Pattern;
+import org.rcl.theor.Syncopation;
 import org.rcl.theor.midi.Patternable;
 
 public class NSequence extends ArrayList<Note> implements NoteCollection, Patternable {

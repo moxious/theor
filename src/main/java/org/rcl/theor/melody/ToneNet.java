@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import org.rcl.theor.NSequence;
-import org.rcl.theor.Note;
 import org.rcl.theor.TheorException;
 import org.rcl.theor.chord.Chord;
 import org.rcl.theor.composer.ProgressionComposer;
 import org.rcl.theor.interval.Interval;
+import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
 
 public class ToneNet {
 	public static final double BASE_WEIGHT = (double)1/(double)12;

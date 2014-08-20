@@ -9,8 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jfugue.Player;
-import org.rcl.theor.Ditty;
 import org.rcl.theor.TheorException;
+import org.rcl.theor.composer.Ditty;
 
 public class AudioConverter {
 	private static Logger log = Logger.getLogger(AudioConverter.class.getName());

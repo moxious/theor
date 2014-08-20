@@ -1,8 +1,8 @@
 package org.rcl.theor.composer.chooser;
 
-import org.rcl.theor.Note;
 import org.rcl.theor.composer.DataFeed;
 import org.rcl.theor.composer.TonalCenter;
+import org.rcl.theor.note.Note;
 
 public class TonalCenterChooser extends Chooser {
 	public TonalCenterChooser() { ; } 

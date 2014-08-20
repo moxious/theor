@@ -1,10 +1,11 @@
-package org.rcl.theor;
+package org.rcl.theor.note;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.jfugue.Pattern;
+import org.rcl.theor.Syncopation;
 import org.rcl.theor.interval.Interval;
 import org.rcl.theor.midi.Patternable;
 import org.rcl.theor.scale.Scale;

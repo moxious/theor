@@ -1,4 +1,4 @@
-package org.rcl.theor;
+package org.rcl.theor.composer;
 
 import java.util.Properties;
 

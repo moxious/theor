@@ -1,4 +1,4 @@
-package org.rcl.theor;
+package org.rcl.theor.note;
 
 import java.util.Collection;
 

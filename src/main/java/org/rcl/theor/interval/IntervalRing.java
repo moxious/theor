@@ -2,7 +2,13 @@ package org.rcl.theor.interval;
 
 import org.rcl.theor.Ring;
 
-
+/**
+ * A ring of interval objects.   Interval rings are good for continuosly applying the same set of intervals to a sequence of
+ * notes indefinitely far.  For example, consider a whole tone scale as the Interval Ring of [Interval.WHOLE_STEP] continuously applied
+ * to notes.
+ * @author moxious
+ *
+ */
 public class IntervalRing extends Ring<Interval> {
 	public IntervalRing(Interval[] ivs) { 
 		super(ivs);
@@ -19,6 +25,8 @@ public class IntervalRing extends Ring<Interval> {
 		
 		return new IntervalRing(ivs); 
 	}
+	
+	public Interval[] getRing() { return ring; } 
 	
 	public String toString() { 
 		StringBuffer b = new StringBuffer("<IntervalRing: ");

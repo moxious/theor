@@ -9,8 +9,6 @@ import org.jfugue.Instrument;
 import org.jfugue.Pattern;
 import org.jfugue.Player;
 import org.jfugue.Tempo;
-import org.rcl.theor.Ditty;
-import org.rcl.theor.Note;
 import org.rcl.theor.Syncopation;
 import org.rcl.theor.TheorException;
 import org.rcl.theor.chord.Chord;
@@ -23,6 +21,7 @@ import org.rcl.theor.composer.chooser.ScaleChooser;
 import org.rcl.theor.composer.chooser.TempoChooser;
 import org.rcl.theor.composer.chooser.TonalCenterChooser;
 import org.rcl.theor.melody.MelodyMaker;
+import org.rcl.theor.note.Note;
 import org.rcl.theor.scale.Scale;
 
 public class ProgressionComposer extends Composer {

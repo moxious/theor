@@ -3,9 +3,9 @@ package org.rcl.theor.test;
 import org.jfugue.Pattern;
 import org.jfugue.Player;
 import org.junit.Test;
-import org.rcl.theor.NSequence;
-import org.rcl.theor.Note;
 import org.rcl.theor.Syncopation;
+import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
 import org.rcl.theor.scale.Scale;
 
 public class Basics {

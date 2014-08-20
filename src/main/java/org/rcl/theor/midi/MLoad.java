@@ -12,12 +12,12 @@ import javax.sound.midi.InvalidMidiDataException;
 
 import org.jfugue.Pattern;
 import org.jfugue.Player;
-import org.rcl.theor.NSequence;
-import org.rcl.theor.Note;
-import org.rcl.theor.NoteCollection;
 import org.rcl.theor.TheorException;
-import org.rcl.theor.TimedNote;
 import org.rcl.theor.chord.Chord;
+import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
+import org.rcl.theor.note.NoteCollection;
+import org.rcl.theor.note.TimedNote;
 
 public class MLoad {
 	public static Map<Integer,NoteCollection> midi2NSequence(File midi) throws IOException, InvalidMidiDataException, TheorException {

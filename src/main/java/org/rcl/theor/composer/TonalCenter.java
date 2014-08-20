@@ -1,6 +1,6 @@
 package org.rcl.theor.composer;
 
-import org.rcl.theor.Note;
+import org.rcl.theor.note.Note;
 
 public class TonalCenter {
 	public int noteConstant;

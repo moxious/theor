@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.rcl.theor.NSequence;
-import org.rcl.theor.Note;
 import org.rcl.theor.interval.Interval;
 import org.rcl.theor.interval.IntervalRing;
+import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
 
 public class Scale extends AbstractScale {
 	public static final Scale AEOLIAN = new Scale("aeolian", Interval.parse("W h W W h W W"));
@@ -67,7 +67,7 @@ public class Scale extends AbstractScale {
 	protected Note root = Note.MIDDLE_C;	
 	
 	public Scale(String name, IntervalRing ring) { 
-		this(name, ring.ring);
+		this(name, ring.getRing());
 	}
 	
 	public Scale(String name, Interval[] intervals) {
