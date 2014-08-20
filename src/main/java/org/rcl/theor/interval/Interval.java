@@ -1,7 +1,10 @@
-package org.rcl.theor;
+package org.rcl.theor.interval;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.rcl.theor.Note;
+import org.rcl.theor.scale.Scale;
 
 public class Interval {
 	public static final Interval UNISON = new Interval(0);	

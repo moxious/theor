@@ -1,7 +1,7 @@
 package org.rcl.theor.composer.chooser;
 
-import org.rcl.theor.Scale;
 import org.rcl.theor.composer.DataFeed;
+import org.rcl.theor.scale.Scale;
 
 public class ScaleChooser extends Chooser {
 	public static Scale[] majorChoices = new Scale []{

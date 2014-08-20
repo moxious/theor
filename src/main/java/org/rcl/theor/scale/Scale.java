@@ -1,9 +1,14 @@
-package org.rcl.theor;
+package org.rcl.theor.scale;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.rcl.theor.NSequence;
+import org.rcl.theor.Note;
+import org.rcl.theor.interval.Interval;
+import org.rcl.theor.interval.IntervalRing;
 
 public class Scale extends AbstractScale {
 	public static final Scale AEOLIAN = new Scale("aeolian", Interval.parse("W h W W h W W"));

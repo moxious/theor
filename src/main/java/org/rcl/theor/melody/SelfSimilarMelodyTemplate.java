@@ -7,9 +7,9 @@ import org.jfugue.Pattern;
 import org.jfugue.Player;
 import org.rcl.theor.NSequence;
 import org.rcl.theor.Note;
-import org.rcl.theor.Scale;
 import org.rcl.theor.Syncopation;
 import org.rcl.theor.TheorException;
+import org.rcl.theor.scale.Scale;
 
 /**
  * http://www.algorithmiccomposer.com/2011/06/tom-johnsons-self-similar-melodies.html

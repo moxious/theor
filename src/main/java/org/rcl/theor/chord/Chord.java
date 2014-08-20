@@ -6,13 +6,13 @@ import java.util.HashSet;
 
 import org.jfugue.Pattern;
 import org.jfugue.Player;
-import org.rcl.theor.Interval;
 import org.rcl.theor.NSequence;
 import org.rcl.theor.Note;
 import org.rcl.theor.NoteCollection;
 import org.rcl.theor.SequenceAnalyzer;
 import org.rcl.theor.Syncopation;
 import org.rcl.theor.TheorException;
+import org.rcl.theor.interval.Interval;
 import org.rcl.theor.midi.Patternable;
 
 public class Chord extends HashSet<Note> implements NoteCollection, Patternable {

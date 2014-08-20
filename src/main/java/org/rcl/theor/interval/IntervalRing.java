@@ -1,4 +1,6 @@
-package org.rcl.theor;
+package org.rcl.theor.interval;
+
+import org.rcl.theor.Ring;
 
 
 public class IntervalRing extends Ring<Interval> {

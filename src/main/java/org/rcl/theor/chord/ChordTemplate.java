@@ -3,8 +3,8 @@ package org.rcl.theor.chord;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
-import org.rcl.theor.Interval;
 import org.rcl.theor.TheorException;
+import org.rcl.theor.interval.Interval;
 
 public class ChordTemplate {
 	protected static final java.util.regex.Pattern romanNumeralPattern = java.util.regex.Pattern.compile("([iIvV]+)");

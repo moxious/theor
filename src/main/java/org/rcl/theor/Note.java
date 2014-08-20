@@ -5,29 +5,61 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jfugue.Pattern;
+import org.rcl.theor.interval.Interval;
 import org.rcl.theor.midi.Patternable;
+import org.rcl.theor.scale.Scale;
 
+/**
+ * A note is an object that contains a tone class, an octave, and a rendering hint.  A tone class is what most people think of
+ * when they think of notes; a tone class might be C, or D flat.  Tone classes though are independent of octave; the note C may
+ * occur in any number of octaves.  Octaves are relative to 0, so middle C is the note with tone class C, octave 0.  Finally, 
+ * the rendering hint is whether to render a note as flat or not.  Most notes have two names; i.e. C# and Db are the same thing.
+ * For that tone class, the rendering hint indicates whether the note should be considered sharp or flat.
+ * @author moxious
+ *
+ */
 public class Note implements Patternable {
+	/** A */
 	public static final int A = 9;
-	public static final int AS = 10;	
+	/** A sharp */
+	public static final int AS = 10;
+	/** B flat */
 	public static final int BF = 10;
+	/** B */
 	public static final int B = 11;
+	/** C flat */
 	public static final int CF = 11;
+	/** B sharp */
 	public static final int BS = 0;
+	/** C */
 	public static final int C = 0;
+	/** C sharp */
 	public static final int CS = 1;
+	/** D flat */
 	public static final int DF = 1;
+	/** D */
 	public static final int D = 2;
+	/** D sharp */
 	public static final int DS = 3;
+	/** E flat */
 	public static final int EF = 3;
+	/** E */
 	public static final int E = 4;
+	/** F flat */
 	public static final int FF = 4;
+	/** E sharp */
 	public static final int ES = 5;
+	/** F */
 	public static final int F = 5;
+	/** F sharp */
 	public static final int FS = 6;
+	/** G flat */
 	public static final int GF = 6;
+	/** G */
 	public static final int G = 7;
+	/** G sharp */
 	public static final int GS = 8;
+	/** A flat */
 	public static final int AF = 8;
 	
 	public static final Map<String,Integer> nameToInt = new HashMap<String,Integer>();
@@ -67,6 +99,14 @@ public class Note implements Patternable {
 		}		
 	};
 	
+	public static int getDominant(int noteConstant) { 
+		return (noteConstant + 7) % 12;
+	}
+	
+	public static int getSubdominant(int noteConstant) { 
+		return (noteConstant + 5) % 12;
+	}
+	
 	public static int getRelativeMajor(int noteConstant) { 
 		return (noteConstant + 3) % 12;
 	}
@@ -75,7 +115,18 @@ public class Note implements Patternable {
 		return (noteConstant + 9) % 12; 
 	}
 	
+	/** Returns true iff the note is not natural.  Be careful, in that since tone classes
+	 * have more than one name, if you ask if Eb is sharp, the answer will be yes (because it's also
+	 * D#, and it's not natural)
+	 * @param c tone class
+	 * @return true if the tone class is not natural, false otherwise.
+	 */
 	public static boolean isSharp(int c) { return !isNatural(c); }
+	
+	/**
+	 * Returns true iff the tone class is A, B, C, D, E, F, or G.
+	 * @param c tone class
+	 */
 	public static boolean isNatural(int c) { 
 		switch(c) {
 		case A:
@@ -117,6 +168,8 @@ public class Note implements Patternable {
 	/** MIDI octave number */
 	protected int octave = 0; 
 	
+	public Note(int toneCl) { this(toneCl, 0, true); } 
+	
 	public Note(int toneCl, int octave) { this(toneCl, octave, true); } 
 	
 	public Note(int toneCl, int octave, boolean renderFlat) {
@@ -145,13 +198,19 @@ public class Note implements Patternable {
 		return i;
 	}
 	
-	/** Return the distance from another note, in semitones */
+	/** Return the distance from another note, in semitones.
+	 * Note that this works by MIDI value math, so it is octave sensitive.
+	 */
 	public int getDistance(Note other) { 
 		return getMIDI() - other.getMIDI(); 
 	}
 	
 	public Note getRelativeMajor() { return new Note(Note.getRelativeMajor(toneClass), octave); } 
 	public Note getRelativeMinor() { return new Note(Note.getRelativeMinor(toneClass), octave); } 
+	public Note getDominant() { return new Note(Note.getDominant(toneClass), octave); }
+	public Note getSubdominant() { return new Note(Note.getSubdominant(toneClass), octave); } 
+	
+	
 	public int getToneClass() { return toneClass; } 
 	public int getOctave() { return octave; } 
 	public boolean isSharp() { return Note.isSharp(toneClass); } 

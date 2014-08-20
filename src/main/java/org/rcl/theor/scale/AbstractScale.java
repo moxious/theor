@@ -1,4 +1,7 @@
-package org.rcl.theor;
+package org.rcl.theor.scale;
+
+import org.rcl.theor.interval.Interval;
+import org.rcl.theor.interval.IntervalRing;
 
 public abstract class AbstractScale {
 	public String name = null;

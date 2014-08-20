@@ -1,5 +1,7 @@
 package org.rcl.theor;
 
+import org.rcl.theor.interval.Interval;
+
 public class SequenceAnalyzer {
 	public boolean second; 
 	public boolean flatThird; 

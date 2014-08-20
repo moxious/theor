@@ -5,8 +5,8 @@ import org.jfugue.Player;
 import org.junit.Test;
 import org.rcl.theor.NSequence;
 import org.rcl.theor.Note;
-import org.rcl.theor.Scale;
 import org.rcl.theor.Syncopation;
+import org.rcl.theor.scale.Scale;
 
 public class Basics {
 	@Test
