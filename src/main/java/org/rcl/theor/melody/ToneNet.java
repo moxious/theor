@@ -3,7 +3,6 @@ package org.rcl.theor.melody;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.rcl.theor.TheorException;
@@ -13,6 +12,18 @@ import org.rcl.theor.interval.Interval;
 import org.rcl.theor.note.NSequence;
 import org.rcl.theor.note.Note;
 
+/**
+ * A tone net is basically a graph of tones, with transitions between them.  At any given state of the tone net, 
+ * there are a bunch of probabilities for how likely it is that the next tone will be some certain choice.   Consider a tone
+ * net on the notes within C major (C, D, E, F, G, A, B).   Let's say the first note chosen was C.  Probabilities would then
+ * be assigned (configurable) to bias the chances of the next tone being chosen.   Let's say that we're more likely to go to the
+ * 5th (G) or the 4th (F) because that sounds pleasing; but there would still be a small choice of jumping to the 7th (B).
+ * 
+ * <p>Tone nets let you bias transitions between notes in certain ways, while retaining the chance for some spontenaity in what i
+ * is chosen.
+ * @author moxious
+ *
+ */
 public class ToneNet {
 	public static final double BASE_WEIGHT = (double)1/(double)12;
 	protected HashSet<Integer> homeSequence = null;

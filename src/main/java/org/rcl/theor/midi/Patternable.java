@@ -5,7 +5,7 @@ import org.rcl.theor.Syncopation;
 
 /**
  * An interface for objects that can be represented as JFugue MIDI patterns.
- * @author DMALLEN
+ * @author moxious
  */
 public interface Patternable {
 	public Pattern toPattern(Syncopation sync);

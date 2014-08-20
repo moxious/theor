@@ -1,6 +1,11 @@
 package org.rcl.theor.composer;
 
-
+/** 
+ * A data feed is an object containing an array of bytes, with various ways you can move through that feed of data.
+ * These are used as parameters passed to various composer methods.  Ultimately the data in the data feed controls 
+ * how a ditty is generated.   The data feed is the "language" which the composer "interprets".
+ * @author moxious
+ */
 public class DataFeed {
 	byte[]data;
 	int ptr;

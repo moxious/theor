@@ -13,7 +13,7 @@ import org.rcl.theor.scale.Scale;
 
 /**
  * http://www.algorithmiccomposer.com/2011/06/tom-johnsons-self-similar-melodies.html
- * @author DMALLEN
+ * @author moxious
  */
 public class SelfSimilarMelodyTemplate {
 	protected List<Integer> template = null;

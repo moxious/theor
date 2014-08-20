@@ -4,8 +4,15 @@ import java.util.Properties;
 
 import org.jfugue.Pattern;
 
+/**
+ * A ditty is a very small song that the composer composes, containing a JFugue pattern.
+ * @author moxious
+ */
 public class Ditty {
+	/** The JFugue pattern suitable for rendering or saving to MIDI */
 	protected Pattern pat;
+	
+	/** Properties describing how the ditty was generated/what it contains */
 	protected Properties props;
 	
 	public Ditty(Pattern pat) { 
