@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.jfugue.Pattern;
 import org.rcl.theor.Syncopation;
+import org.rcl.theor.interval.Interval;
 import org.rcl.theor.midi.Patternable;
 
 public class NSequence extends ArrayList<Note> implements NoteCollection, Patternable, PitchClassSet {
@@ -140,5 +141,15 @@ public class NSequence extends ArrayList<Note> implements NoteCollection, Patter
 		}
 		
 		return true;
+	}
+
+	public NSequence transpose(Interval i) {
+		NSequence ns = new NSequence();
+		
+		for(Note n : this) { 
+			ns.add(n.transpose(i));
+		}
+		
+		return ns;
 	}
 }

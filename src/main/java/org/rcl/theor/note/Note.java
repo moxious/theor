@@ -175,8 +175,6 @@ public class Note implements Patternable, NoteCollection, PitchClassSet {
 	}
 	
 	public boolean renderFlat() { return renderFlat; } 
-	public Note apply(Interval i) { return i.apply(this); } 
-	public Note apply(Integer interval) { return new Interval(interval).apply(this); } 
 	
 	/** Calculate the frequency of this note in Hz */
 	public double getFrequency() { 
@@ -273,5 +271,9 @@ public class Note implements Patternable, NoteCollection, PitchClassSet {
 		return other != null && 
 			   other.getPitchClasses().size() == 1 && 
 			   other.getPitchClasses().iterator().next().intValue() == getPitchClass();
+	}
+	
+	public Note transpose(Interval i) { 
+		return i.apply(this);  
 	}
 } // End Note

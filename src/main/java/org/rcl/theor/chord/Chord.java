@@ -404,5 +404,13 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable,
 		}
 		
 		return true;
+	}
+
+	public Chord transpose(Interval i) {
+		NoteCollection ncol = new NSequence();
+		for(Note n : this)
+			ncol.add(n.transpose(i));
+		
+		return new Chord(ncol);
 	}	
 } // End Chord
