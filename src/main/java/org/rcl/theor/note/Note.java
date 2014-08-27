@@ -1,10 +1,13 @@
 package org.rcl.theor.note;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jfugue.Pattern;
 import org.rcl.theor.Syncopation;
@@ -22,7 +25,7 @@ import org.rcl.theor.scale.Scale;
  * @see Pitch Classes http://en.wikipedia.org/wiki/Pitch-class
  * @author moxious
  */
-public class Note implements Patternable, NoteCollection {
+public class Note implements Patternable, NoteCollection, PitchClassSet {
 	/** A */
 	public static final int A = 9;
 	/** A sharp */
@@ -161,12 +164,12 @@ public class Note implements Patternable, NoteCollection {
 	/** MIDI octave number */
 	protected int octave = 0; 
 	
-	public Note(int toneCl) { this(toneCl, 0, true); } 
+	public Note(int pitchClass) { this(pitchClass, 0, true); } 
 	
-	public Note(int toneCl, int octave) { this(toneCl, octave, true); } 
+	public Note(int pitchClass, int octave) { this(pitchClass, octave, true); } 
 	
-	public Note(int toneCl, int octave, boolean renderFlat) {
-		this.pitchClass = toneCl;
+	public Note(int pitchClass, int octave, boolean renderFlat) {
+		this.pitchClass = pitchClass;
 		this.octave = octave;
 		this.renderFlat = renderFlat;
 	}
@@ -250,5 +253,25 @@ public class Note implements Patternable, NoteCollection {
 	/** Because a note is not really a collection, this always throws UnsupportedOperationException */
 	public boolean add(Note n) {
 		throw new UnsupportedOperationException();
+	}
+	
+	public Set<Integer> getPitchClasses() {
+		HashSet<Integer> pcs = new HashSet<Integer>(1);
+		pcs.add(getPitchClass());
+		return pcs;
+	}
+	
+	public List<Integer> getNormalOrder() {
+		ArrayList<Integer> list = new ArrayList<Integer>(1);
+		list.add(getPitchClass());
+		return list;
+	}
+	
+	public List<Integer> getNaturalOrder() { return getNormalOrder(); } 
+	
+	public boolean equivalent(PitchClassSet other) { 
+		return other != null && 
+			   other.getPitchClasses().size() == 1 && 
+			   other.getPitchClasses().iterator().next().intValue() == getPitchClass();
 	}
 } // End Note

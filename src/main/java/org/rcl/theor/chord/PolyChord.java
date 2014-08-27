@@ -18,4 +18,6 @@ public class PolyChord extends Chord {
 		for(Chord c : components) {	addAll(c);	}
 		setTonic(null); 
 	} // End PolyChord
+	
+	public Collection<Chord> getComponents() { return components; } 
 } // End PolyChord

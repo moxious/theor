@@ -11,7 +11,7 @@ import org.jfugue.Pattern;
 import org.rcl.theor.Syncopation;
 import org.rcl.theor.midi.Patternable;
 
-public class NSequence extends ArrayList<Note> implements NoteCollection, Patternable {
+public class NSequence extends ArrayList<Note> implements NoteCollection, Patternable, PitchClassSet {
 	private static final long serialVersionUID = 619198894201315898L;
 
 	public enum StringType { NoteName, Frequency, MIDI };
@@ -100,5 +100,45 @@ public class NSequence extends ArrayList<Note> implements NoteCollection, Patter
 	}
 		
 	public Collection<Note> getNotes() { return this; }
-	public int countNotes() { return size(); } 
+	public int countNotes() { return size(); }
+
+	public List<Integer> getNormalOrder() {
+		Set<Integer> pitchClasses = getPitchClasses();
+		ArrayList<Integer> list = new ArrayList<Integer>(pitchClasses.size());
+		
+		for(Integer i : pitchClasses) { list.add(i); } 
+		
+		// Normal order must be sorted, ascending.
+		Collections.sort(list);
+		
+		// TODO Auto-generated method stub
+		return list;
+	} 
+	
+	public List<Integer> getNaturalOrder() {
+		Set<Integer> added = new HashSet<Integer>();
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		for(Note n : getNotes()) { 
+			if(added.contains(n.getPitchClass())) continue;
+			list.add(n.getPitchClass());
+			added.add(n.getPitchClass());
+		}
+		
+		return list;
+	}
+	
+	public boolean equivalent(PitchClassSet other) { 
+		if(other == null) return false;
+		List<Integer> nf = other.getNormalOrder();
+		List<Integer> me = getNormalOrder();
+		
+		if(nf.size() != me.size()) return false;
+		
+		for(int x=0; x<me.size(); x++) { 
+			if(me.get(x).intValue() != nf.get(x).intValue()) return false;
+		}
+		
+		return true;
+	}
 }

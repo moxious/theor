@@ -1,7 +1,6 @@
 package org.rcl.theor.composer.chooser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -50,7 +49,7 @@ public class InstrumentChooser extends Chooser {
 	}
 	
 	private static final List<Byte> makeList(Object[]objs) { 
-		ArrayList<Byte>list = new ArrayList<Byte>();		
+		ArrayList<Byte>list = new ArrayList<Byte>();				
 		for(Object set : objs) list.addAll((Set<Byte>)set); 		
 		return list;
 	}

@@ -1,8 +1,11 @@
 package org.rcl.theor.chord;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.jfugue.Pattern;
 import org.jfugue.Player;
@@ -14,6 +17,7 @@ import org.rcl.theor.midi.Patternable;
 import org.rcl.theor.note.NSequence;
 import org.rcl.theor.note.Note;
 import org.rcl.theor.note.NoteCollection;
+import org.rcl.theor.note.PitchClassSet;
 
 /**
  * A chord is a set of notes.   This set of notes is un-ordered, although the notes may have a natural ordering
@@ -23,7 +27,7 @@ import org.rcl.theor.note.NoteCollection;
  * includes a G tonic, a 4th (C) and a 6th (E).
  * @author moxious
  */
-public class Chord extends HashSet<Note> implements NoteCollection, Patternable {
+public class Chord extends HashSet<Note> implements NoteCollection, Patternable, PitchClassSet {
 	private static final long serialVersionUID = 3386041763039624476L;
 	protected Note tonic = null;	
 	
@@ -373,4 +377,32 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 	public static int randIntBetween(int x, int y) { 
 		return x + (int)(Math.random() * ((y-x) + 1));
 	}
+
+	public Set<Integer> getPitchClasses() {
+		HashSet<Integer> pcs = new HashSet<Integer>();
+		for(Note n : this) pcs.add(n.getPitchClass());
+		return pcs;
+	}
+
+	public List<Integer> getNormalOrder() {
+		ArrayList<Integer> list = new ArrayList<Integer>(getPitchClasses());
+		Collections.sort(list);
+		return list;
+	}
+
+	public List<Integer> getNaturalOrder() { return getNormalOrder(); } 
+
+	public boolean equivalent(PitchClassSet other) { 
+		if(other == null) return false;
+		List<Integer> nf = other.getNormalOrder();
+		List<Integer> me = getNormalOrder();
+		
+		if(nf.size() != me.size()) return false;
+		
+		for(int x=0; x<me.size(); x++) { 
+			if(me.get(x).intValue() != nf.get(x).intValue()) return false;
+		}
+		
+		return true;
+	}	
 } // End Chord
