@@ -10,11 +10,11 @@ public class Notes {
 	public void testNotes() {
 		Note c = Note.MIDDLE_C;
 		
-		assertTrue("C's relative minor is A", c.getRelativeMinor().getToneClass() == Note.A);
+		assertTrue("C's relative minor is A", c.getRelativeMinor().getPitchClass() == Note.A);
 		assertTrue("C's MIDI number is 60", c.getMIDI() == 60);					
-		assertTrue("C's relative major is Eb", c.getRelativeMajor().getToneClass() == Note.EF);		
-		assertTrue("C's dominant is G", c.getDominant().getToneClass() == Note.G);
-		assertTrue("C's subdominant is F", c.getSubdominant().getToneClass() == Note.F);
+		assertTrue("C's relative major is Eb", c.getRelativeMajor().getPitchClass() == Note.EF);		
+		assertTrue("C's dominant is G", c.getDominant().getPitchClass() == Note.G);
+		assertTrue("C's subdominant is F", c.getSubdominant().getPitchClass() == Note.F);
 		
 		double freq = c.getFrequency();
 		// Due to double math, it's hard to ask for the value to be exact.

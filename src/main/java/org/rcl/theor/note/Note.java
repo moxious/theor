@@ -218,6 +218,7 @@ public class Note implements Patternable, NoteCollection, PitchClassSet {
 	}
 	
 	public String toString() {
+		System.out.println(getPitchClass() + " => " + Note.name(getPitchClass()));
 		String n = Note.name(getPitchClass(), renderFlat);
 		if(n == null) n = ""+getPitchClass() + "/";
 		
@@ -275,5 +276,17 @@ public class Note implements Patternable, NoteCollection, PitchClassSet {
 	
 	public Note transpose(Interval i) { 
 		return i.apply(this);  
+	}
+	
+	public Note inverse() {
+		return new Note((12 - getPitchClass()) % 12, octave, renderFlat);
+	}
+	
+	/**
+	 * Note that return type here is PitchClassSet, not Note - because the prime form always starts with PitchClass 0, 
+	 * for Notes this always returns the same thing and shouldn't be interpreted as a C note.
+	 */
+	public PitchClassSet primeForm() {
+		return new Note(0, octave, renderFlat);
 	}
 } // End Note

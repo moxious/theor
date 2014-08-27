@@ -152,4 +152,19 @@ public class NSequence extends ArrayList<Note> implements NoteCollection, Patter
 		
 		return ns;
 	}
+	
+	public PitchClassSet inverse() {
+		NSequence ns = new NSequence();
+		for(Note n : this) ns.add(n.inverse());
+		return ns;
+	}
+	
+	public PitchClassSet primeForm() {
+		List<Integer> list = getNormalOrder();
+		if(list.isEmpty()) return this;
+		
+		int intervalToTranspose = 12 - list.get(0);
+		System.out.println("Transposing " + list.get(0) + " up " + intervalToTranspose);
+		return transpose(new Interval(intervalToTranspose));
+	}
 }
