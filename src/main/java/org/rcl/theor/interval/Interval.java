@@ -96,7 +96,7 @@ public class Interval {
 	}
 	
 	public Note apply(Note n) { 
-		int c = n.getToneClass();
+		int c = n.getPitchClass();
 		int o = n.getOctave();
 		c += i;
 		

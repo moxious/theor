@@ -2,8 +2,8 @@ package org.rcl.theor.melody;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.rcl.theor.TheorException;
 import org.rcl.theor.chord.Chord;
@@ -26,7 +26,7 @@ import org.rcl.theor.note.Note;
  */
 public class ToneNet {
 	public static final double BASE_WEIGHT = (double)1/(double)12;
-	protected HashSet<Integer> homeSequence = null;
+	protected Set<Integer> homeSequence = null;
 	protected double [] weights = null;
 	protected int chooseIDX = 0;
 	protected Note tonic = null;
@@ -40,7 +40,7 @@ public class ToneNet {
 	public ToneNet(Note tonic, NSequence notes) {
 		clear();
 		this.tonic = tonic;
-		homeSequence = notes.getToneClasses();
+		homeSequence = notes.getPitchClasses();
 	}
 	
 	public List<Double> getWeights() {
@@ -100,7 +100,7 @@ public class ToneNet {
 	}
 	
 	protected double influence(Note n, double encouragement) { 
-		return influence(n.getToneClass(), encouragement); 
+		return influence(n.getPitchClass(), encouragement); 
 	}
 	
 	protected double influence(int toneClass, double encouragement) { 
@@ -115,8 +115,8 @@ public class ToneNet {
 		clear();
 		Note chordTonic = c.getTonic();
 		
-		weights[chordTonic.getToneClass()] = (BASE_WEIGHT * 8 * resolutionBias); 		
-		weights[tonic.getToneClass()] *= BIG_ENCOURAGE;
+		weights[chordTonic.getPitchClass()] = (BASE_WEIGHT * 8 * resolutionBias); 		
+		weights[tonic.getPitchClass()] *= BIG_ENCOURAGE;
 		
 		NSequence toDiscourage = new NSequence(new Note[] {
 				Interval.TRITONE.apply(chordTonic), Interval.AUGMENTED_FIFTH.apply(chordTonic),
@@ -131,8 +131,8 @@ public class ToneNet {
 		int prev=-1;
 		
 		if(last != null) { 
-			next = getNextInHomeSequence(last.getToneClass()); 
-			prev = getPreviousInHomeSequence(last.getToneClass());
+			next = getNextInHomeSequence(last.getPitchClass()); 
+			prev = getPreviousInHomeSequence(last.getPitchClass());
 		}
 		
 		/*

@@ -133,17 +133,17 @@ public class Note implements Patternable, NoteCollection {
 		}
 	}
 	
-	public static String name(int toneClass) { return name(toneClass, true); }	
-	public static String name(int toneClass, boolean renderFlat) {
-		if(toneClass == 12) toneClass = 0; 
+	public static String name(int pitchClass) { return name(pitchClass, true); }	
+	public static String name(int pitchClass, boolean renderFlat) {
+		if(pitchClass == 12) pitchClass = 0; 
 		
-		int nc = Math.abs(toneClass) % 12;
+		int nc = Math.abs(pitchClass) % 12;
 		
-		if(nc != toneClass) System.err.println("WARNING: Note#name is changing " + toneClass + " => " + nc); 
+		if(nc != pitchClass) System.err.println("WARNING: Note#name is changing " + pitchClass + " => " + nc); 
 		
 		String [] arr = intToName.get(nc);
 		
-		if(arr == null) { System.err.println("Note#name: WTF is " + toneClass + "?"); return "FOOBAR"; } 
+		if(arr == null) { System.err.println("Note#name: WTF is " + pitchClass + "?"); return "FOOBAR"; } 
 		
 		if(arr.length == 1) return arr[0];
 		else { 
@@ -156,7 +156,7 @@ public class Note implements Patternable, NoteCollection {
 
 	/** Controls whether notes are rendered as flat or sharp, if applicable */
 	protected boolean renderFlat = true; 
-	protected int toneClass = -1;
+	protected int pitchClass = -1;
 	
 	/** MIDI octave number */
 	protected int octave = 0; 
@@ -166,7 +166,7 @@ public class Note implements Patternable, NoteCollection {
 	public Note(int toneCl, int octave) { this(toneCl, octave, true); } 
 	
 	public Note(int toneCl, int octave, boolean renderFlat) {
-		this.toneClass = toneCl;
+		this.pitchClass = toneCl;
 		this.octave = octave;
 		this.renderFlat = renderFlat;
 	}
@@ -186,8 +186,8 @@ public class Note implements Patternable, NoteCollection {
 	
 	/** Get the MIDI byte note name */
 	public byte getMIDI() { 
-		byte i = (byte)(60 + (octave * 12) + toneClass);
-		if(i < 0) System.err.println("BAD MIDI BYTE " + i + " for " + this + " intValue " + (int)(60 + (octave*12) + toneClass));
+		byte i = (byte)(60 + (octave * 12) + pitchClass);
+		if(i < 0) System.err.println("BAD MIDI BYTE " + i + " for " + this + " intValue " + (int)(60 + (octave*12) + pitchClass));
 		return i;
 	}
 	
@@ -198,27 +198,27 @@ public class Note implements Patternable, NoteCollection {
 		return getMIDI() - other.getMIDI(); 
 	}
 	
-	public Note getRelativeMajor() { return new Note(Note.getRelativeMajor(toneClass), octave); } 
-	public Note getRelativeMinor() { return new Note(Note.getRelativeMinor(toneClass), octave); } 
-	public Note getDominant() { return new Note(Note.getDominant(toneClass), octave); }
-	public Note getSubdominant() { return new Note(Note.getSubdominant(toneClass), octave); } 
+	public Note getRelativeMajor() { return new Note(Note.getRelativeMajor(pitchClass), octave); } 
+	public Note getRelativeMinor() { return new Note(Note.getRelativeMinor(pitchClass), octave); } 
+	public Note getDominant() { return new Note(Note.getDominant(pitchClass), octave); }
+	public Note getSubdominant() { return new Note(Note.getSubdominant(pitchClass), octave); } 
 	
 	
-	public int getToneClass() { return toneClass; } 
+	public int getPitchClass() { return pitchClass; } 
 	public int getOctave() { return octave; } 
-	public boolean isSharp() { return Note.isSharp(toneClass); } 
-	public boolean isNatural() { return Note.isNatural(toneClass); } 
+	public boolean isSharp() { return Note.isSharp(pitchClass); } 
+	public boolean isNatural() { return Note.isNatural(pitchClass); } 
 	public boolean equals(Object o) { 
 		if(o == null) return false;
 		if(!(o instanceof Note)) return false;
 		Note n = (Note)o;
 		
-		return getToneClass() == n.getToneClass() && getOctave() == n.getOctave();
+		return getPitchClass() == n.getPitchClass() && getOctave() == n.getOctave();
 	}
 	
 	public String toString() {
-		String n = Note.name(getToneClass(), renderFlat);
-		if(n == null) n = ""+getToneClass() + "/";
+		String n = Note.name(getPitchClass(), renderFlat);
+		if(n == null) n = ""+getPitchClass() + "/";
 		
 		// The octave is a *MIDI* octave; in MIDI, A-440 is in octave 0,
 		// but in the rest of the world, it's in the 4th octave.
@@ -228,8 +228,8 @@ public class Note implements Patternable, NoteCollection {
 	public static void main(String [] args) throws Exception { 
 		for(Note n : Scale.MAJOR.apply()) {
 			System.out.println(n + " freq " + n.getFrequency()); 
-			System.out.println("Relative major: " + Note.name(Note.getRelativeMajor(n.getToneClass())) + 
-					" Relative minor: " + Note.name(Note.getRelativeMinor(n.getToneClass())));
+			System.out.println("Relative major: " + Note.name(Note.getRelativeMajor(n.getPitchClass())) + 
+					" Relative minor: " + Note.name(Note.getRelativeMinor(n.getPitchClass())));
 		}
 	}
 	

@@ -142,7 +142,7 @@ public class ProgressionComposer extends Composer {
 		// Make last one ring for a while.
 		durations[durations.length-1] = randomBetween(2,5) * durations[durations.length-1]; 
 		
-		List<Chord>chords = cProg.apply(new Note(tonic.getToneClass(), harmonyOctave));		
+		List<Chord>chords = cProg.apply(new Note(tonic.getPitchClass(), harmonyOctave));		
 		double total = 0.0;
 		
 		for(int x=0; x<chords.size(); x++) {

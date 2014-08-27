@@ -80,7 +80,7 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		
 		for(Note n : this) { 
 			// Don't permit a minor third in our result.
-			if(n.getToneClass() == Interval.MINOR_THIRD.apply(tonic).getToneClass()) continue;
+			if(n.getPitchClass() == Interval.MINOR_THIRD.apply(tonic).getPitchClass()) continue;
 			else ncol.add(n);
 		}
 		
@@ -97,7 +97,7 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 		
 		for(Note n : this) { 
 			// Don't permit a major third in our result.
-			if(n.getToneClass() == Interval.THIRD.apply(tonic).getToneClass()) continue;
+			if(n.getPitchClass() == Interval.THIRD.apply(tonic).getPitchClass()) continue;
 			else ncol.add(n);
 		}
 		
@@ -183,7 +183,7 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 			return "Atonal Chord " + asSequence() + " tonic=" + tonic; 
 				
 		StringBuffer b = new StringBuffer("");
-		String tonicName = Note.name(tonic.getToneClass());
+		String tonicName = Note.name(tonic.getPitchClass());
 		b.append(tonicName);
 		
 		SequenceAnalyzer r = new SequenceAnalyzer(tonic, this);
@@ -246,7 +246,7 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 	/** Check to see if this contains a given note; if octaveSensitive is true, it will require that the note be in a given octave. */
 	public boolean contains(Note n, boolean octaveSensitive) { 
 		for(Note o : this) { 
-			if(o.equals(n) || (o.getToneClass() == n.getToneClass() && !octaveSensitive)) return true;
+			if(o.equals(n) || (o.getPitchClass() == n.getPitchClass() && !octaveSensitive)) return true;
 		}
 		
 		return false;
@@ -310,8 +310,8 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 			Note bottom = ns.remove(0);
 			
 			Note newTone = null;
-			if(bottom.getToneClass() < top.getToneClass()) newTone = new Note(bottom.getToneClass(), top.getOctave()+1);
-			else newTone = new Note(bottom.getToneClass(), top.getOctave());
+			if(bottom.getPitchClass() < top.getPitchClass()) newTone = new Note(bottom.getPitchClass(), top.getOctave()+1);
+			else newTone = new Note(bottom.getPitchClass(), top.getOctave());
 			
 			ns.add(newTone);
 			if(bottom.equals(tonic)) newTonic = newTone;
@@ -325,8 +325,8 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable 
 			Note bottom = ns.get(0);
 			Note newTone = null;
 			
-			if(top.getToneClass() > bottom.getToneClass()) newTone = new Note(top.getToneClass(), bottom.getOctave()-1);
-			else newTone = new Note(top.getToneClass(), bottom.getOctave()); 
+			if(top.getPitchClass() > bottom.getPitchClass()) newTone = new Note(top.getPitchClass(), bottom.getOctave()-1);
+			else newTone = new Note(top.getPitchClass(), bottom.getOctave()); 
 			
 			if(top.equals(tonic)) newTonic = newTone;
 			currentInversion--;			

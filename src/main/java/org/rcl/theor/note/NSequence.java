@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jfugue.Pattern;
 import org.rcl.theor.Syncopation;
@@ -42,16 +43,16 @@ public class NSequence extends ArrayList<Note> implements NoteCollection, Patter
 		return copy;
 	}
 	
-	public HashSet<Integer> getToneClasses() { 
+	public Set<Integer> getPitchClasses() { 
 		HashSet<Integer> tc = new HashSet<Integer>();
-		for(Note n : this) tc.add(n.getToneClass()); 
+		for(Note n : this) tc.add(n.getPitchClass()); 
 		return tc;
 	}
 	
 	/** Check to see if this contains a given note; if octaveSensitive is true, it will require that the note be in a given octave. */
 	public boolean contains(Note n, boolean octaveSensitive) { 
 		for(Note o : this) { 
-			if(o.equals(n) || (o.getToneClass() == n.getToneClass() && !octaveSensitive)) return true;
+			if(o.equals(n) || (o.getPitchClass() == n.getPitchClass() && !octaveSensitive)) return true;
 		}
 		
 		return false;
@@ -65,7 +66,7 @@ public class NSequence extends ArrayList<Note> implements NoteCollection, Patter
 		
 		for(int x=0; x<size(); x++) {			
 			if(octaveSensitive && !other.get(x).equals(get(x))) return false;
-			else if(other.get(x).getToneClass() != get(x).getToneClass()) return false;
+			else if(other.get(x).getPitchClass() != get(x).getPitchClass()) return false;
 		}
 		
 		return true; 

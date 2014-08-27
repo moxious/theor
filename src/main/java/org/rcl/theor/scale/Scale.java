@@ -135,7 +135,7 @@ public class Scale extends AbstractScale {
 		HashSet<Integer> toneClassMembers = new HashSet<Integer>();
 		NSequence ns = apply(base);
 		for(Note n : ns) { 
-			toneClassMembers.add(n.getToneClass());
+			toneClassMembers.add(n.getPitchClass());
 		}
 		
 		return toneClassMembers;

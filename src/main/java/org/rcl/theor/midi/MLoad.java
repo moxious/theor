@@ -62,7 +62,7 @@ public class MLoad {
 				active.add(new TimedNote(toneClass, octave, duration)); 
 			}
 			
-			if(active != null && active.countNotes() >= 3 && active instanceof NSequence && ((NSequence)active).getToneClasses().size()>=3) { 
+			if(active != null && active.countNotes() >= 3 && active instanceof NSequence && ((NSequence)active).getPitchClasses().size()>=3) { 
 				Chord c = new Chord(active);
 				moments.put(activeMoment, c); 
 			}
