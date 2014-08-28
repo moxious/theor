@@ -10,7 +10,7 @@ import org.rcl.theor.scale.Scale;
 
 public class Basics {
 	@Test
-	public static void test(String [] args) throws Exception { 
+	public void test() throws Exception { 
 		Player p = new Player();
 		
 		NSequence seq = Scale.MINOR_PENTATONIC.apply(new Note(Note.C, 0));
