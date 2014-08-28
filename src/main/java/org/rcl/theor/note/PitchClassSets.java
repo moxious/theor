@@ -25,7 +25,7 @@ public class PitchClassSets {
 		System.out.println("BASE: " + toString(normalOrder));
 		
 		List<?>[] rotations = enumerateRotations(normalOrder);
-		for(List<?> l : rotations) { System.out.println("ENUMERATION: " + toString(l)); }
+		// for(List<?> l : rotations) { System.out.println("ENUMERATION: " + toString(l)); }
 		
 		List<Integer> normalForm = chooseMostPackedForm(rotations);
 		System.out.println("NORMAL " + toString(normalForm));
@@ -150,11 +150,23 @@ public class PitchClassSets {
 		if(enumerations == null || enumerations.length == 0) throw new RuntimeException("Invalid enumerations, empty or null");
 		
 		// Validate all of the enumerated options to prevent bad inputs.
-		for(int x=0; x<enumerations.length; x++) validate((List<Integer>)enumerations[x]); 
+		int expectedLength = enumerations[0].size();
+		for(int x=0; x<enumerations.length; x++) {
+			validate((List<Integer>)enumerations[x]);
+			if(enumerations[x].size() != expectedLength) throw new RuntimeException("All options must be the same length!"); 
+		}
+		
+		// If there's only one option, it's definitely the most packed.
+		if(enumerations.length == 1) return (List<Integer>)enumerations[0];
+		
+		// If there are two options that are equal, then either will do.
+		else if(enumerations.length == 2 && equals((List<Integer>)enumerations[0], (List<Integer>)enumerations[1])) 
+			return (List<Integer>)enumerations[0];
 		
 		// We'll start by comparing first and last items.
 		int x=0, y=enumerations[0].size()-1;
-							
+					
+		System.out.println("BEST BETWEEN: " + toString(enumerations[0]) + " and " + toString(enumerations[1])); 
 		while(true) {
 			// First item is the index of the best difference so far, second item
 			// is what that difference is.  Third item is number of times seen.
@@ -184,22 +196,39 @@ public class PitchClassSets {
 				// We found a best difference between the x and the y'th elements.  There's only one
 				// PCS that has that, so we're done.
 				return (List<Integer>)enumerations[bestDifferenceSoFar[0]];
-			}
+			} 
+			
+			System.out.println("Iterating x=" + x + " y=" + y + " over " + enumerations.length + " options."); 
 			
 			// Otherwise, we need to keep checking, adjusting the y values.
 			// The algorithm says compare first and last items first.  Then look at first and second,
 			// first and third, and so on.
-			if(y == enumerations[0].size() - 1) 
+			if(y == enumerations[0].size() - 1) { 
 				y = 1;  // Look at first and second (x=0, y=1)
-			else if(y == enumerations[0].size() - 2) {
-				// Degenerate error case.  We've looked through all combinations.  There's *still* a tie?
+				
+				if(enumerations[0].size() == 2) { 
+					// We can't repeat here - we already looked at first and last (x=0, y=1).  The two sets aren't different, return
+					// the first.
+					// System.err.println("2-item list showed no intervallic difference  " + toString(enumerations)); 
+					return (List<Integer>)enumerations[0];
+				}
+			} else if(y == enumerations[0].size() - 2) {
+				// Degenerate error case.  We've looked through all combinations.
+				
+				// enumerations.length == 2 means there are only two options.  Meaning we can only run one
+				// iteration of the algorithm.
+				
+				// y == enumerations[0].size() - 2 means we're currently looking at the second to last item.  
+				// Looking at the one after that would be futile, since the first algorithm run is looking at the first and last.
+				
+				// There's *still* a tie?
 				// If we increment y now,
 				// we'll be checking a case we already checked.  So throw an exception here instead of getting
 				// stuck in an infinite loop.
 				if(bestDifferenceSoFar[0] >= 0) {
-					// This shouldn't be possible (a tie after this many rounds) this is just added for safety.
-					System.err.println("Warning, returning index " + bestDifferenceSoFar[0] + " despite continued tie after " + 
-				                       (y+1) + " iterations looking.");
+					// A tie after this many rounds is possible.  So just pick the first item if we can't figure out a better option.
+					// System.err.println("Warning, returning index " + bestDifferenceSoFar[0] + " despite continued tie after " + 
+				    // (y+1) + " iterations looking through " + toString(enumerations));
 					return (List<Integer>)enumerations[bestDifferenceSoFar[0]];
 				} else
 					// This should be impossible.
@@ -207,7 +236,20 @@ public class PitchClassSets {
 			} else { 
 				y++;   // Look at the first and the next yth.
 			}
+			
+			System.out.println("NEXT:  x=" + x + " y=" + y + " over " + enumerations.length + " options."); 
 		}		
+	}
+	
+	protected static String toString(List[] options) { 
+		StringBuffer b = new StringBuffer("");
+		
+		for(List l : options) { 
+			b.append(toString(l));
+			b.append(", ");
+		}
+		
+		return b.toString();
 	}
 	
 	/**
