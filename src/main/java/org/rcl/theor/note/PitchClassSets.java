@@ -27,7 +27,7 @@ public class PitchClassSets {
 		List<?>[] rotations = enumerateRotations(normalOrder);
 		for(List<?> l : rotations) { System.out.println("ENUMERATION: " + toString(l)); }
 		
-		List<Integer> normalForm = chooseNormalForm(rotations);
+		List<Integer> normalForm = chooseMostPackedForm(rotations);
 		System.out.println("NORMAL " + toString(normalForm));
 
 		return normalForm;
@@ -57,10 +57,28 @@ public class PitchClassSets {
 		// This is how much we need to transpose up, in order to get the first item to zero.
 		int transpositionInterval = 12 - normalForm.get(0);
 		
-		List<Integer> primeForm = new ArrayList<Integer>(normalForm);		
-		transpose(primeForm, transpositionInterval);
+		List<Integer> candidate = new ArrayList<Integer>(normalForm);		
+		transpose(candidate, transpositionInterval);
 		
-		System.out.println("TRANSPOSED " + toString(primeForm));
+		// OK, at this point we have a candidate.  But we also have to check its inversion...
+		List<Integer> candidateInversion = new ArrayList<Integer>(candidate); 
+		
+		invert(candidateInversion);
+		candidateInversion = normalForm(candidateInversion);
+		int transpositionalInterval = 12 - candidateInversion.get(0);
+		transpose(candidateInversion, transpositionalInterval);
+		
+		// Now we have a candidate, and its inversion.  Whichever is more packed to the left
+		// is the prime form.
+		List[] options = new List[] { candidate, candidateInversion };
+		
+		List<Integer> primeForm = chooseMostPackedForm(options);
+		
+		System.out.println("PRIME_FORM(" + toString(pcs) + "): normal " + normalForm + 
+				" => transposed " + candidate + 
+				" => inverted/transposed " + candidateInversion + 
+				" => prime " + primeForm); 
+		
 		return primeForm;
 	}
 	
@@ -87,7 +105,7 @@ public class PitchClassSets {
 		validate(pcs);
 		
 		for(int x=0; x<pcs.size(); x++) { 
-			pcs.set(x, 12 - pcs.get(x));
+			pcs.set(x, (12 - pcs.get(x)) % 12);
 		}
 		
 		return pcs;
@@ -128,7 +146,7 @@ public class PitchClassSets {
 	 * @return the rotation with minimum distance between first and last items.
 	 */	
 	@SuppressWarnings("unchecked")
-	protected static List<Integer> chooseNormalForm(List<?>[] enumerations) {
+	protected static List<Integer> chooseMostPackedForm(List<?>[] enumerations) {
 		if(enumerations == null || enumerations.length == 0) throw new RuntimeException("Invalid enumerations, empty or null");
 		
 		// Validate all of the enumerated options to prevent bad inputs.
