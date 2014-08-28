@@ -105,11 +105,12 @@ public class Interval {
 	public boolean isForward() { return i > 0; } 
 	public boolean isReverse() { return i < 0; } 
 	
-	/** Return the inversion of this interval; that is, an interval to the same note, but int he opposite direction.
+	/** Return the inversion of this interval; that is, an interval to the same note, but in the opposite direction.
 	 * The inversion of the unison is the unison.  */
-	public Interval getInversion() {  
-		if(i < 0) return new Interval(i + 12); 
-		else return new Interval(i - 12); 
+	public Interval inverse() {  
+		if(i == 0) return Interval.UNISON;
+		
+		return new Interval(12 - Math.abs(i));
 	}
 	
 	public Note apply(Note n) { 
@@ -144,7 +145,7 @@ public class Interval {
 		System.out.println(s.apply());
 		
 		Note c = new Note(Note.C, 0); 
-		System.out.println("A 3rd from " + c + " is " + THIRD.apply(c) + " and its inversion is " + THIRD.getInversion().apply(c)); 		
+		System.out.println("A 3rd from " + c + " is " + THIRD.apply(c) + " and its inversion is " + THIRD.inverse().apply(c)); 		
 	}
 	
 	public static String name(Interval[] ivs) {

@@ -83,9 +83,9 @@ public class ChordProgression {
 			// Guarantee that we're going the right direction.
 			Interval i = ct.getDistanceFromTonic();
 			if(d == Direction.UP) { 
-				if(i.isReverse()) i = i.getInversion();
+				if(i.isReverse()) i = i.inverse();
 			} else { 
-				if(i.isForward()) i = i.getInversion();
+				if(i.isForward()) i = i.inverse();
 			}
 						
 			Note chordBaseNote = i.apply(tonic);

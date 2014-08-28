@@ -3,6 +3,7 @@ package org.rcl.theor.note;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import org.rcl.theor.interval.Interval;
 import org.rcl.theor.interval.IntervalVector;
@@ -26,6 +27,10 @@ public class PitchClassSets {
 
 		return normalForm;
 	}
+	
+	public static List<Integer> transpose(PitchClassSet pcs, Interval i) { return transpose(pcs.getNaturalOrder(),i.intValue()); }
+	public static List<Integer> normalForm(PitchClassSet pcs) { return normalForm(pcs.getNaturalOrder()); }
+	public static List<Integer> primeForm(PitchClassSet pcs) { return primeForm(pcs.getNormalOrder()); }
 	
 	/**
 	 * This implementation takes the "rigorous method" identified by this:
@@ -85,11 +90,15 @@ public class PitchClassSets {
 	
 	public static void main(String [] args) throws Exception { 
 		NSequence ns = new NSequence();
-		ns.add(new Note(Note.C)); ns.add(new Note(Note.D));
-		ns.add(new Note(Note.E)); ns.add(new Note(Note.G));
-		ns.add(new Note(Note.AS)); 
 		
-		System.out.println("Prime form " + primeForm(ns.getNaturalOrder()));
+		Random r = new Random();
+		
+		for(int x=0; x<r.nextInt(12)+5; x++) { 
+			ns.add(new Note(r.nextInt(12), r.nextInt(3)));
+		}
+
+		System.out.println("Starting random sequence: " + ns); 
+		System.out.println("=====> Prime form " + primeForm(ns.getNaturalOrder()));
 		
 		System.out.println("Starting NS again " + ns);
 		System.out.println(toString(ns.getNormalOrder()));

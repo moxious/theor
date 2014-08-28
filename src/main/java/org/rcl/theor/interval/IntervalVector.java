@@ -60,12 +60,12 @@ public class IntervalVector {
 	}
 	
 	public String toString() { 
-		return new String("[" + 
+		return new String("<" + 
 	                      ic1 + " " + 
 	                      ic2 + " " + 
 	                      ic3 + " " + 
 	                      ic4 + " " + 
 	                      ic5 + " " + 
-	                      ic6 + "]");
+	                      ic6 + ">");
 	}
 } // End IntervalVector
