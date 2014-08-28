@@ -59,6 +59,16 @@ public class IntervalVector {
 		return new IntervalVector(ics[0], ics[1], ics[2], ics[3], ics[4], ics[5]);
 	}
 	
+	public boolean equals(IntervalVector other) { 		
+		return other != null && 
+			   ic1 == other.ic1 &&
+			   ic2 == other.ic2 && 
+			   ic3 == other.ic3 && 
+			   ic4 == other.ic4 && 
+			   ic5 == other.ic5 &&
+			   ic6 == other.ic6;
+	}
+	
 	public String toString() { 
 		return new String("<" + 
 	                      ic1 + " " + 

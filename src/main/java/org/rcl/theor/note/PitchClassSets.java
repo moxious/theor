@@ -12,6 +12,11 @@ import org.rcl.theor.interval.IntervalVector;
  * A set of methods that implement pitch class set relationships and operations.  This is generally done abstractly over
  * lists of Integers.  Other types exist which implement the PitchClassSet interface, which use these methods to do some of 
  * their work.
+ * 
+ * <p>Most types dealt with here are simple List<Integer>.  This strips away some of the music context (chord, sequence, whatever).
+ * If you take a chord and try to compute its prime form, you will get a certain PCS.  Re-interpreting that PCS as a chord or a 
+ * sequence is up to the developer.
+ * 
  * @author moxious
  */
 public class PitchClassSets {
@@ -28,9 +33,14 @@ public class PitchClassSets {
 		return normalForm;
 	}
 	
+	/** Convenience function that calls transpose with pcs's natural order */
 	public static List<Integer> transpose(PitchClassSet pcs, Interval i) { return transpose(pcs.getNaturalOrder(),i.intValue()); }
+	
+	/** Convenience function that calls normalForm with pcs's natural order */
 	public static List<Integer> normalForm(PitchClassSet pcs) { return normalForm(pcs.getNaturalOrder()); }
-	public static List<Integer> primeForm(PitchClassSet pcs) { return primeForm(pcs.getNormalOrder()); }
+	
+	/** Convenience function that calls primeForm with pcs's natural order */
+	public static List<Integer> primeForm(PitchClassSet pcs) { return primeForm(pcs.getNaturalOrder()); }
 	
 	/**
 	 * This implementation takes the "rigorous method" identified by this:
@@ -83,6 +93,12 @@ public class PitchClassSets {
 		return pcs;
 	}
 
+	/**
+	 * This function helps validate other function inputs.  If the PCS provided is null or empty, it 
+	 * throws a runtime exception.
+	 * @param pcs
+	 * @throws RuntimeException
+	 */
 	protected static void validate(List<Integer> pcs) { 
 		if(pcs == null) throw new RuntimeException("Invalid pcs: null"); 
 		if(pcs.size() == 0) throw new RuntimeException("Invalid pcs: empty"); 
@@ -114,6 +130,9 @@ public class PitchClassSets {
 	@SuppressWarnings("unchecked")
 	protected static List<Integer> chooseNormalForm(List<?>[] enumerations) {
 		if(enumerations == null || enumerations.length == 0) throw new RuntimeException("Invalid enumerations, empty or null");
+		
+		// Validate all of the enumerated options to prevent bad inputs.
+		for(int x=0; x<enumerations.length; x++) validate((List<Integer>)enumerations[x]); 
 		
 		// We'll start by comparing first and last items.
 		int x=0, y=enumerations[0].size()-1;
@@ -268,6 +287,18 @@ public class PitchClassSets {
 		return true;
 	}
 	
+	public static boolean equals(List<Integer> a, List<Integer>b) { 
+		validate(a);
+		validate(b);
+		
+		if(a.size() != b.size()) return false;
+		for(int x=0; x<a.size(); x++) {
+			if(a.get(x) != b.get(x)) return false;
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * @param pcs a pitch class set
 	 * @return a String representation of the form e.g. [0, 1, 2, 4]
@@ -284,4 +315,4 @@ public class PitchClassSets {
 		b.append("]");
 		return b.toString();
 	}
-}
+} // End PitchClassSets
