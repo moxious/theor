@@ -19,6 +19,12 @@ public class NSequence extends ArrayList<Note> implements NoteCollection, Patter
 
 	public NSequence() { super(); } 
 	
+	public NSequence(Collection<Integer> pitchClasses) { 
+		for(Integer i : pitchClasses) { 
+			add(new Note(i)); 
+		}
+	}
+	
 	public NSequence(Note[] notes) { 
 		for(Note n : notes) add(n); 
 	}
@@ -157,14 +163,5 @@ public class NSequence extends ArrayList<Note> implements NoteCollection, Patter
 		NSequence ns = new NSequence();
 		for(Note n : this) ns.add(n.inverse());
 		return ns;
-	}
-	
-	public PitchClassSet primeForm() {
-		List<Integer> list = getNormalOrder();
-		if(list.isEmpty()) return this;
-		
-		int intervalToTranspose = 12 - list.get(0);
-		System.out.println("Transposing " + list.get(0) + " up " + intervalToTranspose);
-		return transpose(new Interval(intervalToTranspose));
 	}
 }

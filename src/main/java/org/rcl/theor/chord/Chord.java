@@ -41,6 +41,10 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable,
 		this(new NSequence(ncol).sort().get(0), ncol); 		
 	}
 	
+	public Chord(Collection<Integer> pitchCollection) {
+		this(new NSequence(pitchCollection));
+	}
+	
 	public Chord(Note tonic, NoteCollection notes) {
 		setTonic(tonic);
 		for(Note n : notes.getNotes()) add(n); 

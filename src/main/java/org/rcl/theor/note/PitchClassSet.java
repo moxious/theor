@@ -31,11 +31,4 @@ public interface PitchClassSet {
 	 * @return the inverse of the PitchClassSet
 	 */
 	public PitchClassSet inverse();
-	
-	/**
-	 * Prime form is "the form of a pitch class set such that it is in normal order and the first integer is 0".
-	 * This is accomplished by transposing the PCS until the first element is 0.
-	 * @return prime form
-	 */
-	public PitchClassSet primeForm();
 }

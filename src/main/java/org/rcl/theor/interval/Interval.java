@@ -75,6 +75,23 @@ public class Interval {
 		this.i = diff;
 	}
 	
+	/** All intervals are divided into 7 classes (really 6, with 0 a special exception).
+	 * Interval class for a given interval is between 0 and 6.
+	 * @return the interval class
+	 */
+	public Integer getIntervalClass() { 
+		if(i >= 0 && i <= 6) return i;
+		if(i > 6) return 12 - i;
+		
+		// If the interval is negative, then move it up until it's positive, then recurse.
+		int z = i;
+		while(z < 0) {
+			z = z + 12; // Up an octave
+		}
+		
+		return new Interval(z).getIntervalClass();
+	}
+	
 	public Interval(int i) { this.i = i; } 
 	public int intValue() { return i; }
 	public String toString() { 

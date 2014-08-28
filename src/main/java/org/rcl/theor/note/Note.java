@@ -218,7 +218,7 @@ public class Note implements Patternable, NoteCollection, PitchClassSet {
 	}
 	
 	public String toString() {
-		System.out.println(getPitchClass() + " => " + Note.name(getPitchClass()));
+		// System.out.println(getPitchClass() + " => " + Note.name(getPitchClass()));
 		String n = Note.name(getPitchClass(), renderFlat);
 		if(n == null) n = ""+getPitchClass() + "/";
 		
