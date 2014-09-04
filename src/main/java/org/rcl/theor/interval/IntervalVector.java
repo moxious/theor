@@ -33,6 +33,34 @@ public class IntervalVector {
 		this.ic5 = ic5;
 		this.ic6 = ic6;
 	}
+
+	/**
+	 * @return the number of interval sets that are empty, i.e. == 0 (between 0 and 6)
+	 */
+	public int countEmptyIntervalSets() { 
+		int x=0;
+		
+		if(ic1 == 0) x++;
+		if(ic2 == 0) x++;
+		if(ic3 == 0) x++;
+		if(ic4 == 0) x++;
+		if(ic5 == 0) x++;
+		if(ic6 == 0) x++;
+		
+		return x;
+	}
+	
+	/**
+	 * @return the number of interval sets that are not empty, i.e. > 0 (between 0 and 6)
+	 */
+	public int countNonEmptyIntervalSets() { 
+		return 6 - countEmptyIntervalSets();
+	}
+	
+	/**
+	 * @return the total number of all intervals in the vector, the sum of ic1 .. ic6.
+	 */
+	public int countIntervals() { return ic1 + ic2 + ic3 + ic4 + ic5 + ic6; } 
 	
 	public static IntervalVector fromPitchClassSet(PitchClassSet pcs) { 
 		return fromPitchClassSet(pcs.getNaturalOrder());

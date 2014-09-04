@@ -2,12 +2,15 @@ package org.rcl.theor.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 import org.rcl.theor.interval.IntervalVector;
 import org.rcl.theor.note.NSequence;
+import org.rcl.theor.note.Note;
 import org.rcl.theor.note.PitchClassSet;
 import org.rcl.theor.note.PitchClassSets;
 
@@ -22,6 +25,61 @@ public class PCS {
 		}
 	}
 	
+	@Test
+	public void randomPCSTest() { 
+		Random r = new Random();
+		
+		for(int i=0; i<1000; i++) { 
+			NSequence ns = new NSequence();
+			
+			for(int x=0; x<r.nextInt(12)+5; x++) { 
+				ns.add(new Note(r.nextInt(12), r.nextInt(3)));
+			}
+			
+			List<Integer> no = ns.getNormalOrder();
+			List<Integer> pf  = PitchClassSets.primeForm(ns);
+			List<Integer> pf2 = PitchClassSets.invert(new ArrayList<Integer>(pf));
+			List<Integer> doublePf = PitchClassSets.primeForm(pf);
+			
+			assertTrue("Prime form " + PitchClassSets.toString(pf) + " and its inverse " + 
+			           PitchClassSets.toString(pf2) + " are equivalent", PitchClassSets.equivalent(pf, pf2));
+			assertTrue("Prime form of " + PitchClassSets.toString(pf) + " (a prime form) is itself.", 
+					   PitchClassSets.equivalent(pf, doublePf));
+			
+			// In a PC set of k items, you expect (k^2 - k) / 2 intervals.
+			int k = no.size();			
+			IntervalVector v = IntervalVector.fromPitchClassSet(ns);
+
+			if(k == 1)
+				assertTrue("PCS cardinals of 1 have boring IVs " + v + " == " + "[0 0 0 0 0 0]",
+						v.equals(new IntervalVector(0, 0, 0, 0, 0, 0)));
+			else if(k == 11)
+				assertTrue("PCS cardinals of 11 have boring IVs " + v + " == " + "[10 10 10 10 10 10 5]",
+						v.equals(new IntervalVector(10, 10, 10, 10, 10, 5)));
+			else if(k == 12)
+				assertTrue("PCS cardinals of 12 have boring IVs " + v + " == " + "[12 12 12 12 12 6]",
+						v.equals(new IntervalVector(12, 12, 12, 12, 12, 6)));
+			
+			// A few odd properties from the forte book.
+			if(k == 7) 
+				assertTrue("Forte says that all 7 element PCSs have all intervals represented " + PitchClassSets.toString(no) + 
+						" IV=" + v,
+						v.ic1 > 0 && 
+						v.ic2 > 0 && 
+						v.ic3 > 0 &&
+						v.ic4 > 0 &&
+						v.ic5 > 0 &&
+						v.ic6 > 0);			
+			else if(k == 5) 
+				assertTrue("Forte says all 5 element sets have at least one ic4 " + PitchClassSets.toString(no) + " IV=" + v,
+						v.ic4 > 0);
+			
+			if(k == 5 || k == 6) 
+				assertTrue("Forte says all 5 and 6 element PC sets have a maximum of 3 empty interval sets " + 
+						   PitchClassSets.toString(no) + " IV=" + v,
+						   v.countEmptyIntervalSets() <= 3);
+		} // End for		
+	}
 	
 	@Test
 	public void test() {

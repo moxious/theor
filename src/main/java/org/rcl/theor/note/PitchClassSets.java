@@ -166,7 +166,7 @@ public class PitchClassSets {
 		// We'll start by comparing first and last items.
 		int x=0, y=enumerations[0].size()-1;
 					
-		System.out.println("BEST BETWEEN: " + toString(enumerations[0]) + " and " + toString(enumerations[1])); 
+		// System.out.println("BEST BETWEEN: " + toString(enumerations[0]) + " and " + toString(enumerations[1])); 
 		while(true) {
 			// First item is the index of the best difference so far, second item
 			// is what that difference is.  Third item is number of times seen.
@@ -239,6 +239,37 @@ public class PitchClassSets {
 			
 			System.out.println("NEXT:  x=" + x + " y=" + y + " over " + enumerations.length + " options."); 
 		}		
+	}
+
+	/**
+	 * Determine whether two pitch class sets are a Z-related pair. The definition of a z-related pair is two 
+	 * pitch class sets that have identical interval vectors, but which are not transpositionally or 
+	 * inversionally equivalent.
+	 * @param pcs1
+	 * @param pcs2
+	 * @return
+	 */
+	protected static boolean zRelatedPair(List<Integer> pcs1, List<Integer>pcs2) {
+		validate(pcs1);
+		validate(pcs2);
+		
+		IntervalVector v1 = IntervalVector.fromPitchClassSet(pcs1);
+		IntervalVector v2 = IntervalVector.fromPitchClassSet(pcs2);
+		
+		if(!v1.equals(v2)) return false;
+		
+		Interval i = findEquivalentTranspositionInterval(pcs1, pcs2);
+		
+		// If such an interval exists, then they're not a Z-related pair.
+		if(i != null) 
+			return false;
+		
+		boolean inversionallyEquivalent = equivalent(pcs1, invert(new ArrayList<Integer>(pcs2)));
+		
+		if(inversionallyEquivalent) 
+			return false;
+		
+		return true;
 	}
 	
 	protected static String toString(List[] options) { 
