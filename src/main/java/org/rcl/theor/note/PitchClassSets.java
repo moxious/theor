@@ -70,9 +70,7 @@ public class PitchClassSets {
 		
 		// Now we have a candidate, and its inversion.  Whichever is more packed to the left
 		// is the prime form.
-		List[] options = new List[] { candidate, candidateInversion };
-		
-		List<Integer> primeForm = chooseMostPackedForm(options);
+		List<Integer> primeForm = chooseMostPackedForm(new List[] { candidate, candidateInversion });
 		
 		System.out.println("PRIME_FORM(" + toString(pcs) + "): normal " + normalForm + 
 				" => transposed " + candidate + 
@@ -80,6 +78,21 @@ public class PitchClassSets {
 				" => prime " + primeForm); 
 		
 		return primeForm;
+	}
+	
+	/**
+	 * @param pcs1 a pitch class set
+	 * @param pcs2 a pitch class set
+	 * @return true if pcs2 is a subset of pcs1, false otherwise.
+	 */
+	public static boolean isSubset(List<Integer> pcs1, List<Integer>pcs2) {
+		validate(pcs1);
+		validate(pcs2);
+		
+		for(Integer i : pcs2)
+			if(!pcs1.contains(i)) return false;
+		
+		return true;
 	}
 	
 	/**
@@ -272,10 +285,10 @@ public class PitchClassSets {
 		return true;
 	}
 	
-	protected static String toString(List[] options) { 
+	protected static String toString(List<?>[] options) { 
 		StringBuffer b = new StringBuffer("");
 		
-		for(List l : options) { 
+		for(List<?> l : options) { 
 			b.append(toString(l));
 			b.append(", ");
 		}
