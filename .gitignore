@@ -1,5 +1,6 @@
 *.class
 target/
+samp/
 *~
 .classpath
 *.classpath
