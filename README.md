@@ -11,17 +11,17 @@ Theor is going to be primarily useful to people who have some existing knowledge
 Rather than memorizing every possible key, scale, chord, and so on, it provides a framework for
 computing various musical transformations.
 
-### Dependencies
+## Automatic Composition Examples
 
-Theor uses maven for dependencies and packaging; it has one dependency though that can't be
-managed directly through maven called [JFugue](http://www.jfugue.org/).   This JAR file must
-be downloaded from that site (version 4.0.3) and installed in the local maven repository with
-the following command:
+```
+mvn exec:java -Dexec.mainClass=org.rcl.theor.composer.ProgressionComposer
+```
 
-	mvn install:install-file -Dfile=jfugue-4.0.3.jar -DgroupId=org.jfugue \
-	    -DartifactId=jfugue -Dversion=4.0.3 -Dpackaging=jar
-	
-Without that command, theor will not compile as the jfugue dependency will be missing.
+This will create a number of `*.mid` files in the current directory.
+
+## Unit Tests
+
+`mvn surefire:test -Dtest=*`
 
 ## Basic Usage Examples
 

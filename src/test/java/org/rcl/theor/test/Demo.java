@@ -52,6 +52,11 @@ public class Demo {
 		Player player = new Player();
 		// player.play(container);
 		
+		System.out.println("LOOK HERE ");
+		c = new Chord(Note.MIDDLE_C, Interval.MAJOR_TRIAD);
+		System.out.println(c);
+		System.out.println(c.makeMajor());
+
 		assertTrue("C major is the same as the major version of itself.", c.equals(c.makeMajor(), true, true));
 		assertTrue("C minor is the same as the minor version of C major.", cm.equals(c.makeMinor(), true, true));		
 	}

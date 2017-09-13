@@ -68,173 +68,238 @@ public class Note implements Patternable, NoteCollection, PitchClassSet {
 	public static final int GS = 8;
 	/** A flat */
 	public static final int AF = 8;
-	
-	public static final Map<String,Integer> nameToInt = new HashMap<String,Integer>();
-	public static final Map<Integer,String[]> intToName = new HashMap<Integer,String[]>();
-	
+
+	public static final Map<String, Integer> nameToInt = new HashMap<String, Integer>();
+	public static final Map<Integer, String[]> intToName = new HashMap<Integer, String[]>();
+
 	public static final Note MIDDLE_C = new Note(C, 0);
 	public static final Note A_440 = new Note(A, 0);
-	
-	static {		
-		intToName.put(A, new String[]{"A"});
-		intToName.put(B, new String[]{"B"});
-		intToName.put(C, new String[]{"C"});
-		intToName.put(D, new String[]{"D"});
-		intToName.put(E, new String[]{"E"});
-		intToName.put(F, new String[]{"F"});
-		intToName.put(G, new String[]{"G"});
-		intToName.put(AS, new String[]{"A#", "Bb"});		
-		intToName.put(CS, new String[]{"C#", "Db"});
-		intToName.put(DS, new String[]{"D#", "Eb"});
-		intToName.put(FS, new String[]{"F#", "Gb"});
-		intToName.put(GS, new String[]{"G#", "Ab"});
-		
-		for(Integer k : intToName.keySet()) {
-			String[]vals = intToName.get(k);
-			for(int x=0; x<vals.length; x++) { nameToInt.put(vals[x], k); } 			
+
+	static {
+		intToName.put(A, new String[] { "A" });
+		intToName.put(B, new String[] { "B" });
+		intToName.put(C, new String[] { "C" });
+		intToName.put(D, new String[] { "D" });
+		intToName.put(E, new String[] { "E" });
+		intToName.put(F, new String[] { "F" });
+		intToName.put(G, new String[] { "G" });
+		intToName.put(AS, new String[] { "A#", "Bb" });
+		intToName.put(CS, new String[] { "C#", "Db" });
+		intToName.put(DS, new String[] { "D#", "Eb" });
+		intToName.put(FS, new String[] { "F#", "Gb" });
+		intToName.put(GS, new String[] { "G#", "Ab" });
+
+		for (Integer k : intToName.keySet()) {
+			String[] vals = intToName.get(k);
+			for (int x = 0; x < vals.length; x++) {
+				nameToInt.put(vals[x], k);
+			}
 		}
 	}
-	
-	public static final Comparator<Note>cmp = new Comparator<Note>(){
+
+	public static final Comparator<Note> cmp = new Comparator<Note>() {
 		public int compare(Note o1, Note o2) {
 			byte b1 = o1.getMIDI();
 			byte b2 = o2.getMIDI();
-			
-			if(b1 < b2) return -1;
-			if(b1 > b2) return 1;
+
+			if (b1 < b2)
+				return -1;
+			if (b1 > b2)
+				return 1;
 			return 0;
-		}		
+		}
 	};
-	
-	public static int getDominant(int noteConstant) { return (noteConstant + 7) % 12; }	
-	public static int getSubdominant(int noteConstant) { return (noteConstant + 5) % 12; }
-	public static int getRelativeMajor(int noteConstant) { return (noteConstant + 3) % 12; }	
-	public static int getRelativeMinor(int noteConstant) { return (noteConstant + 9) % 12;	}
-	
+
+	public static int getDominant(int noteConstant) {
+		return (noteConstant + 7) % 12;
+	}
+
+	public static int getSubdominant(int noteConstant) {
+		return (noteConstant + 5) % 12;
+	}
+
+	public static int getRelativeMajor(int noteConstant) {
+		return (noteConstant + 3) % 12;
+	}
+
+	public static int getRelativeMinor(int noteConstant) {
+		return (noteConstant + 9) % 12;
+	}
+
 	/** Returns true iff the note is not natural.  Be careful, in that since tone classes
 	 * have more than one name, if you ask if Eb is sharp, the answer will be yes (because it's also
 	 * D#, and it's not natural)
 	 * @param c tone class
 	 * @return true if the tone class is not natural, false otherwise.
 	 */
-	public static boolean isSharp(int c) { return !isNatural(c); }
-	
+	public static boolean isSharp(int c) {
+		return !isNatural(c);
+	}
+
 	/**
 	 * Returns true iff the tone class is A, B, C, D, E, F, or G.
 	 * @param c tone class
 	 */
-	public static boolean isNatural(int c) { 
-		switch(c) {
+	public static boolean isNatural(int c) {
+		switch (c) {
 		case A:
 		case B:
 		case C:
 		case D:
 		case E:
 		case F:
-		case G: return true;
-		default: return false;
+		case G:
+			return true;
+		default:
+			return false;
 		}
 	}
-	
-	public static String name(int pitchClass) { return name(pitchClass, true); }	
+
+	public static String name(int pitchClass) {
+		return name(pitchClass, true);
+	}
+
 	public static String name(int pitchClass, boolean renderFlat) {
-		if(pitchClass == 12) pitchClass = 0; 
-		
+		if (pitchClass == 12)
+			pitchClass = 0;
+
 		int nc = Math.abs(pitchClass) % 12;
-		
-		if(nc != pitchClass) System.err.println("WARNING: Note#name is changing " + pitchClass + " => " + nc); 
-		
-		String [] arr = intToName.get(nc);
-		
-		if(arr == null) { System.err.println("Note#name: WTF is " + pitchClass + "?"); return "FOOBAR"; } 
-		
-		if(arr.length == 1) return arr[0];
-		else { 
-			if(renderFlat) return arr[1];
-			else return arr[0];
+
+		if (nc != pitchClass)
+			System.err.println("WARNING: Note#name is changing " + pitchClass + " => " + nc);
+
+		String[] arr = intToName.get(nc);
+
+		if (arr == null) {
+			System.err.println("Note#name: WTF is " + pitchClass + "?");
+			return "FOOBAR";
+		}
+
+		if (arr.length == 1)
+			return arr[0];
+		else {
+			if (renderFlat)
+				return arr[1];
+			else
+				return arr[0];
 		}
 	}
-	
-	public static int noteNumber(String name) { return nameToInt.get(name); }
+
+	public static int noteNumber(String name) {
+		return nameToInt.get(name);
+	}
 
 	/** Controls whether notes are rendered as flat or sharp, if applicable */
-	protected boolean renderFlat = true; 
+	protected boolean renderFlat = true;
 	protected int pitchClass = -1;
-	
+
 	/** MIDI octave number */
-	protected int octave = 0; 
-	
-	public Note(int pitchClass) { this(pitchClass, 0, true); } 
-	
-	public Note(int pitchClass, int octave) { this(pitchClass, octave, true); } 
-	
+	protected int octave = 0;
+
+	public Note(int pitchClass) {
+		this(pitchClass, 0, true);
+	}
+
+	public Note(int pitchClass, int octave) {
+		this(pitchClass, octave, true);
+	}
+
 	public Note(int pitchClass, int octave, boolean renderFlat) {
 		this.pitchClass = pitchClass;
 		this.octave = octave;
 		this.renderFlat = renderFlat;
 	}
-	
-	public boolean renderFlat() { return renderFlat; } 
-	
-	/** Calculate the frequency of this note in Hz */
-	public double getFrequency() { 
-		double A_440 = 440.0;
-		int dist = getDistance(new Note(Note.A, 0));		 
-		double a = Math.pow((double)2, (double)1/(double)12);
-		
-		return A_440 * Math.pow(a, dist); 
+
+	public boolean renderFlat() {
+		return renderFlat;
 	}
-	
+
+	/** Calculate the frequency of this note in Hz */
+	public double getFrequency() {
+		double A_440 = 440.0;
+		int dist = getDistance(new Note(Note.A, 0));
+		double a = Math.pow((double) 2, (double) 1 / (double) 12);
+
+		return A_440 * Math.pow(a, dist);
+	}
+
 	/** Get the MIDI byte note name */
-	public byte getMIDI() { 
-		byte i = (byte)(60 + (octave * 12) + pitchClass);
-		if(i < 0) System.err.println("BAD MIDI BYTE " + i + " for " + this + " intValue " + (int)(60 + (octave*12) + pitchClass));
+	public byte getMIDI() {
+		byte i = (byte) (60 + (octave * 12) + pitchClass);
+		if (i < 0)
+			System.err.println(
+					"BAD MIDI BYTE " + i + " for " + this + " intValue " + (int) (60 + (octave * 12) + pitchClass));
 		return i;
 	}
-	
+
 	/** Return the distance from another note, in semitones.
 	 * Note that this works by MIDI value math, so it is octave sensitive.
 	 */
-	public int getDistance(Note other) { 
-		return getMIDI() - other.getMIDI(); 
+	public int getDistance(Note other) {
+		return getMIDI() - other.getMIDI();
 	}
-	
-	public Note getRelativeMajor() { return new Note(Note.getRelativeMajor(pitchClass), octave); } 
-	public Note getRelativeMinor() { return new Note(Note.getRelativeMinor(pitchClass), octave); } 
-	public Note getDominant() { return new Note(Note.getDominant(pitchClass), octave); }
-	public Note getSubdominant() { return new Note(Note.getSubdominant(pitchClass), octave); } 
-	
-	
-	public int getPitchClass() { return pitchClass; } 
-	public int getOctave() { return octave; } 
-	public boolean isSharp() { return Note.isSharp(pitchClass); } 
-	public boolean isNatural() { return Note.isNatural(pitchClass); } 
-	public boolean equals(Object o) { 
-		if(o == null) return false;
-		if(!(o instanceof Note)) return false;
-		Note n = (Note)o;
-		
+
+	public Note getRelativeMajor() {
+		return new Note(Note.getRelativeMajor(pitchClass), octave);
+	}
+
+	public Note getRelativeMinor() {
+		return new Note(Note.getRelativeMinor(pitchClass), octave);
+	}
+
+	public Note getDominant() {
+		return new Note(Note.getDominant(pitchClass), octave);
+	}
+
+	public Note getSubdominant() {
+		return new Note(Note.getSubdominant(pitchClass), octave);
+	}
+
+	public int getPitchClass() {
+		return pitchClass;
+	}
+
+	public int getOctave() {
+		return octave;
+	}
+
+	public boolean isSharp() {
+		return Note.isSharp(pitchClass);
+	}
+
+	public boolean isNatural() {
+		return Note.isNatural(pitchClass);
+	}
+
+	public boolean equals(Object o) {
+		if (o == null)
+			return false;
+		if (!(o instanceof Note))
+			return false;
+		Note n = (Note) o;
+
 		return getPitchClass() == n.getPitchClass() && getOctave() == n.getOctave();
 	}
-	
+
 	public String toString() {
 		// System.out.println(getPitchClass() + " => " + Note.name(getPitchClass()));
 		String n = Note.name(getPitchClass(), renderFlat);
-		if(n == null) n = ""+getPitchClass() + "/";
-		
+		if (n == null)
+			n = "" + getPitchClass() + "/";
+
 		// The octave is a *MIDI* octave; in MIDI, A-440 is in octave 0,
 		// but in the rest of the world, it's in the 4th octave.
-		return n + (octave+4); 
+		return n + (octave + 4);
 	}
-	
-	public static void main(String [] args) throws Exception { 
-		for(Note n : Scale.MAJOR.apply()) {
-			System.out.println(n + " freq " + n.getFrequency()); 
-			System.out.println("Relative major: " + Note.name(Note.getRelativeMajor(n.getPitchClass())) + 
-					" Relative minor: " + Note.name(Note.getRelativeMinor(n.getPitchClass())));
+
+	public static void main(String[] args) throws Exception {
+		for (Note n : Scale.MAJOR.apply()) {
+			System.out.println(n + " freq " + n.getFrequency());
+			System.out.println("Relative major: " + Note.name(Note.getRelativeMajor(n.getPitchClass()))
+					+ " Relative minor: " + Note.name(Note.getRelativeMinor(n.getPitchClass())));
 		}
 	}
-	
+
 	public Pattern toPattern(Syncopation sync) {
 		Pattern p = new Pattern();
 		p.addElement(new org.jfugue.Note(getMIDI(), sync.next()));
@@ -247,37 +312,40 @@ public class Note implements Patternable, NoteCollection, PitchClassSet {
 		return notes;
 	}
 
-	public int countNotes() { return 1; } 
+	public int countNotes() {
+		return 1;
+	}
 
 	/** Because a note is not really a collection, this always throws UnsupportedOperationException */
 	public boolean add(Note n) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public Set<Integer> getPitchClasses() {
 		HashSet<Integer> pcs = new HashSet<Integer>(1);
 		pcs.add(getPitchClass());
 		return pcs;
 	}
-	
+
 	public List<Integer> getNormalOrder() {
 		ArrayList<Integer> list = new ArrayList<Integer>(1);
 		list.add(getPitchClass());
 		return list;
 	}
-	
-	public List<Integer> getNaturalOrder() { return getNormalOrder(); } 
-	
-	public boolean equivalent(PitchClassSet other) { 
-		return other != null && 
-			   other.getPitchClasses().size() == 1 && 
-			   other.getPitchClasses().iterator().next().intValue() == getPitchClass();
+
+	public List<Integer> getNaturalOrder() {
+		return getNormalOrder();
 	}
-	
-	public Note transpose(Interval i) { 
-		return i.apply(this);  
+
+	public boolean equivalent(PitchClassSet other) {
+		return other != null && other.getPitchClasses().size() == 1
+				&& other.getPitchClasses().iterator().next().intValue() == getPitchClass();
 	}
-	
+
+	public Note transpose(Interval i) {
+		return i.apply(this);
+	}
+
 	public Note inverse() {
 		return new Note((12 - getPitchClass()) % 12, octave, renderFlat);
 	}
