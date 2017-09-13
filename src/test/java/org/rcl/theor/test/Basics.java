@@ -25,7 +25,7 @@ public class Basics {
 		pat.add(pat1);
 		pat.add(pat2);
 		
-		p.play(pat);
+		// p.play(pat);
 		
 		System.out.println("Done");
 	} // End main

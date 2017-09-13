@@ -88,13 +88,16 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable,
 		
 		for(Note n : this) { 
 			// Don't permit a minor third in our result.
-			if(n.getPitchClass() == Interval.MINOR_THIRD.apply(tonic).getPitchClass()) continue;
+			if(n.getPitchClass() == Interval.MINOR_THIRD.apply(tonic).getPitchClass()) {
+				continue;
+			}
 			else ncol.add(n);
 		}
 		
-		// Guarantee the presence of a minor third.
-		ncol.add(Interval.THIRD.apply(tonic));
-		return new Chord(tonic, ncol);		
+		// Guarantee the presence of a major third.
+		if (!ncol.contains(Interval.THIRD.apply(tonic), false))
+			ncol.add(Interval.THIRD.apply(tonic));
+		return new Chord(tonic, ncol);
 	}
 	
 	/**
@@ -110,7 +113,8 @@ public class Chord extends HashSet<Note> implements NoteCollection, Patternable,
 		}
 		
 		// Guarantee the presence of a minor third.
-		ncol.add(Interval.MINOR_THIRD.apply(tonic));
+		if (!ncol.contains(Interval.MINOR_THIRD.apply(tonic), false))
+			ncol.add(Interval.MINOR_THIRD.apply(tonic));
 		return new Chord(tonic, ncol);
 	}
 	

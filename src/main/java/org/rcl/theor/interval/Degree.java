@@ -20,5 +20,5 @@ public class Degree {
 	/** An interval a seventh away */
 	public static final Interval SUBTONIC = Interval.MINOR_SEVENTH;
 	/** An interval a seventh away */
-	public static final Interval LEADING = Interval.SEVENTH;	
+	public static final Interval LEADING = Interval.SEVENTH;
 }

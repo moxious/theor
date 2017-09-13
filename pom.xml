@@ -4,7 +4,7 @@
 
   <groupId>org.rcl</groupId>
   <artifactId>theor</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2</version>
   <packaging>jar</packaging>
 
   <name>theor</name>
@@ -12,6 +12,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -26,10 +28,10 @@
     	<version>4.0.3</version>
     </dependency>
     <dependency>
-	<groupId>com.googlecode.combinatoricslib</groupId>
-	<artifactId>combinatoricslib</artifactId>
-	<version>2.1</version>
-	<scope>compile</scope>
+      <groupId>com.googlecode.combinatoricslib</groupId>
+      <artifactId>combinatoricslib</artifactId>
+      <version>2.1</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
