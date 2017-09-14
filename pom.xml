@@ -45,7 +45,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>                        org.rcl.theor.composer.ProgressionComposer                    </mainClass>
+                                    <mainClass>org.rcl.theor.composer.ProgressionComposer</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
